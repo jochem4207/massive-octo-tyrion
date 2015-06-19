@@ -113,7 +113,7 @@ public class PlayerSearchMainFragment extends ListFragment implements AbsListVie
                     //TODO: check if it is here on the right place
                     //Get players
                     Log.i(APP + " Class: " + TAG, "Get Players is being called");
-                    getPlayers(v);
+                    getPlayers();
                     //The interface will be called after getPlayers to change the view with results
                 }
             });
@@ -191,23 +191,24 @@ public class PlayerSearchMainFragment extends ListFragment implements AbsListVie
 
     //SEARCH PLAYERS
 
-    public void getPlayers(View view) {
-        //TODO: Add logging
-        EditText editText = (EditText) view.findViewById(R.id.search_query);
+    public void getPlayers() {
+        if(getView() != null){
+            EditText editText = (EditText) getView().findViewById(R.id.search_query);
 
-        if(editText != null && editText.length() > 3 ){
-            //TODO: check if edit text is a good "input field"
-            String query = editText.getText().toString();
+            if(editText != null && editText.length() > 3 ){
+                //TODO: check if edit text is a good "input field"
+                String query = editText.getText().toString();
 
-            //Log the input
-            Log.i(APP + " Class: " + TAG, "Search:"+ query);
+                //Log the input
+                Log.i(APP + " Class: " + TAG, "Search:"+ query);
 
-            //Call api to get result
-            new CallAPI().execute(API_URL + API_CALL + APPLICATION_ID + API_OPTION + query);
+                //Call api to get result
+                new CallAPI().execute(API_URL + API_CALL + APPLICATION_ID + API_OPTION + query);
 
-        }else{
-            //Give a toast error
-            Toast.makeText(getActivity(), getString(R.string.error_fill_field), Toast.LENGTH_LONG).show();
+            }else{
+                //Give a toast error
+                Toast.makeText(getActivity(), getString(R.string.error_fill_field), Toast.LENGTH_LONG).show();
+            }
         }
     }
 

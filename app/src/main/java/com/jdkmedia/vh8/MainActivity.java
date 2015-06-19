@@ -19,9 +19,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 import com.jdkmedia.vh8.domain.Player;
 import com.jdkmedia.vh8.domain.PlayerExtended;
 import com.jdkmedia.vh8.auth.LoginActivity;
+import com.jdkmedia.vh8.domain.PlayerTank;
 import com.jdkmedia.vh8.fragment.MainActivityFragment;
 import com.jdkmedia.vh8.fragment.NavigationDrawerFragment;
 import com.jdkmedia.vh8.fragment.PlayerDetailFragment;
@@ -33,7 +35,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.lang.reflect.Type;
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 
 
@@ -288,16 +292,47 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
                     Log.e(APP + " Class: " + TAG, "API EXCEPTION");
                 }
 
+
+                //TODO MAKE ACCOUNT ID fix
+
+                //Get players tanks info
+                URL urlGetPlayerTanks = new URL("https://api.worldoftanks.eu/wot/account/tanks/?application_id=demo&account_id=504337382");
+                //open stream
+                InputStream inputPlayerTanks = urlGetPlayerTanks.openStream();
+                //Open reader
+                Reader readerPlayerTanks = new InputStreamReader(inputPlayerTanks);
+                //Json to class
+                //Parse the result
+                JsonElement rootPlayerTanks = new JsonParser().parse(readerPlayerTanks);
+                //Get the status
+                String statusPlayerTanks = rootPlayerTanks.getAsJsonObject().get("status").getAsString();
+                if(statusPlayerTanks.equals("ok")) {
+                    JsonObject obj1 = rootPlayerTanks.getAsJsonObject().get("data").getAsJsonObject();
+                    for (Map.Entry<String, JsonElement> entry : obj1.entrySet()) {
+//                        playerExtended = new Gson().fromJson(entry.getValue(), PlayerExtended.class);
+                        //forech entry.getValue -> creer klas
+                        //Gson Jsonarray
+                        Type listType = new TypeToken<List<PlayerTank>>() {}.getType();
+                        List<PlayerTank> playerTanks = (List<PlayerTank>) new Gson().fromJson(entry.getValue(), listType);
+                        playerExtended.setPlayerTankList(playerTanks);
+
+                    }
+                    //For every entry set create a playerExtended
+
+                }
             } catch (IOException e) {
                 Log.i(APP + " Class: " + TAG, "IOException:" + e);
                 return false;
             }
 
+
+
+
             return true;
         }
 
         protected void onPostExecute(Boolean result) {
-            Log.i(APP + " Class: " + TAG, "Result on post execute:" + result);
+            Log.i(APP + " Class: " + TAG, "Result onpost execute:" + result);
             if (result) {
 
                 //Only get details for logged in player if its the inner fragment
@@ -305,8 +340,7 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
                     playerExtended.setAccessToken(accessToken);
                 }
 
-                //Detail fragment
-
+                //Detail fragments
 
                 //Manage fragment
                 FragmentManager fragmentManager = getFragmentManager();
@@ -316,6 +350,17 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
                     fragmentManager.beginTransaction()
                             .replace(R.id.child_fragment, playerDetailInnerFragment, playerDetailInnerFragment.getClass().getName()).addToBackStack(playerDetailInnerFragment.getClass().getName()).commit();
                 } else {
+                    //Fill player data as good as possible
+                    //player details -> done
+
+                    //Get players tanks
+
+                    //https://api.worldoftanks.eu/wot/account/tanks/?application_id=demo&account_id=504337382
+
+                    //Amount of masterys
+                    //Amount of tanks
+
+
                     PlayerDetailFragment playerDetailFragment = new PlayerDetailFragment(playerExtended);
                     fragmentManager.beginTransaction()
                             .replace(R.id.container, playerDetailFragment, playerDetailFragment.getClass().getName()).addToBackStack(playerDetailFragment.getClass().getName()).commit();

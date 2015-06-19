@@ -2,6 +2,7 @@ package com.jdkmedia.vh8.domain;
 
 import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by jochem on 24-05-15.
@@ -19,7 +20,9 @@ public class PlayerExtended implements Serializable {
     private int globalRating;
 
     private String accessToken;
+    private List<PlayerTank> playerTankList;
 
+    private Statistics statistics;
     //Tank count
     //Tanks?
 
@@ -79,5 +82,13 @@ public class PlayerExtended implements Serializable {
     public void setGlobalRating(int globalRating) {
         this.globalRating = globalRating;
     }
-}
 
+
+    public List<PlayerTank> getPlayerTankList() {
+        return playerTankList;
+    }
+
+    public void setPlayerTankList(List<PlayerTank> playerTankList) {
+        this.playerTankList = playerTankList;
+    }
+}
