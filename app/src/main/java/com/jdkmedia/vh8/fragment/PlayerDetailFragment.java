@@ -72,10 +72,11 @@ public class PlayerDetailFragment extends Fragment {
 
         //Tank count
         PlayerDetailCard tankCountCard = new PlayerDetailCard("Tanks", Integer.toString(playerExtended.getTankCount()) ,R.mipmap.ic_mastery_1);
-        PlayerDetailCard mastersOfExcellenceOneCard = new PlayerDetailCard("Masters Of Excellence 1", Integer.toString(playerExtended.getMarksOfExcellenceCount(1)),R.mipmap.ic_mastery_1);
-        PlayerDetailCard mastersOfExcellenceTwoCard = new PlayerDetailCard("Masters Of Excellence 2", Integer.toString(playerExtended.getMarksOfExcellenceCount(2)),R.mipmap.ic_mastery_1);
-        PlayerDetailCard mastersOfExcellenceThreeCard = new PlayerDetailCard("Masters Of Excellence 3", Integer.toString(playerExtended.getMarksOfExcellenceCount(3)),R.mipmap.ic_mastery_1);
-        PlayerDetailCard mastersOfExcellenceFourCard = new PlayerDetailCard("Masters Of Excellence 4", Integer.toString(playerExtended.getMarksOfExcellenceCount(4)),R.mipmap.ic_mastery_1);
+        //TODO FIX IMAGES FIRST ONE
+        PlayerDetailCard mastersOfExcellenceOneCard = new PlayerDetailCard("Marks Of Excellence ", Integer.toString(playerExtended.getMarksOfExcellenceCount(1)),R.mipmap.ic_mastery_1);
+        PlayerDetailCard mastersOfExcellenceTwoCard = new PlayerDetailCard("Marks Of Excellence 1", Integer.toString(playerExtended.getMarksOfExcellenceCount(2)),R.mipmap.ic_mastery_1);
+        PlayerDetailCard mastersOfExcellenceThreeCard = new PlayerDetailCard("Marks Of Excellence 2", Integer.toString(playerExtended.getMarksOfExcellenceCount(3)),R.mipmap.ic_mastery_2);
+        PlayerDetailCard mastersOfExcellenceFourCard = new PlayerDetailCard("Marks Of Excellence 3", Integer.toString(playerExtended.getMarksOfExcellenceCount(4)),R.mipmap.ic_mastery_3);
 
         results.add(tankCountCard);
         results.add(mastersOfExcellenceOneCard);

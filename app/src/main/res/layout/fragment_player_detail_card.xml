@@ -30,7 +30,7 @@
                 android:layout_centerVertical="true"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/PlayerDetailCardContentDescriptionImage"
-                android:src="@mipmap/ic_mastery_1" />
+               />
 
             <TextView
                 android:id="@+id/detailCardTextViewMain"
