@@ -214,10 +214,10 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
         MyTaskParams taskParams;
         if (accessToken == null && !isLoggedIn) {
             Log.i(APP + " Class: " + TAG, "OnPlayerSelected user is not logged in");
-             taskParams = new MyTaskParams(API_URL + API_CALL + APPLICATION_ID + API_OPTION + player.getAccountId(), false);
+             taskParams = new MyTaskParams(API_URL + API_CALL + APPLICATION_ID + API_OPTION + player.getAccountId(), false, player.getAccountId());
         } else {
             Log.i(APP + " Class: " + TAG, "OnPlayerSelected user is logged in");
-            taskParams = new MyTaskParams(API_URL + API_CALL + APPLICATION_ID + API_OPTION_AUTH + accessToken + API_OPTION + player.getAccountId(), false);
+            taskParams = new MyTaskParams(API_URL + API_CALL + APPLICATION_ID + API_OPTION_AUTH + accessToken + API_OPTION + player.getAccountId(), false, player.getAccountId());
         }
         new CallAPI().execute(taskParams);
     }
@@ -230,7 +230,7 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
     @Override
     public void onLoadDetailFragment(PlayerExtended player) {
         Log.i(APP + " Class: " + TAG, "OnPlayerSelected user is logged in");
-        MyTaskParams taskParams = new MyTaskParams(API_URL + API_CALL + APPLICATION_ID + API_OPTION_AUTH + accessToken + API_OPTION + player.getAccountId(), true);
+        MyTaskParams taskParams = new MyTaskParams(API_URL + API_CALL + APPLICATION_ID + API_OPTION_AUTH + accessToken + API_OPTION + player.getAccountId(), true,player.getAccountId());
         new CallAPI().execute(taskParams);
     }
 
@@ -238,9 +238,11 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
     private static class MyTaskParams {
         String url;
         boolean innerFragment;
+        int accountId;
 
-        MyTaskParams(String url, boolean innerFragment) {
+        MyTaskParams(String url, boolean innerFragment, int accountId) {
             this.url = url;
+            this.accountId = accountId;
             this.innerFragment = innerFragment;
         }
     }
@@ -296,7 +298,7 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
                 //TODO MAKE ACCOUNT ID fix
 
                 //Get players tanks info
-                URL urlGetPlayerTanks = new URL("https://api.worldoftanks.eu/wot/account/tanks/?application_id=demo&account_id=504337382");
+                URL urlGetPlayerTanks = new URL("https://api.worldoftanks.eu/wot/account/tanks/?application_id=demo&account_id=" + params[0].accountId);
                 //open stream
                 InputStream inputPlayerTanks = urlGetPlayerTanks.openStream();
                 //Open reader

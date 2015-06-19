@@ -33,6 +33,8 @@ public class PlayerListAdapter extends BaseAdapter {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+
+
     public List<Player> getData() {
         return mList;
     }
