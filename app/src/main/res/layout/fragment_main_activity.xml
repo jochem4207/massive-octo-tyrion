@@ -1,0 +1,38 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:screenOrientation="portrait"
+    tools:context="com.jdkmedia.vh8.fragment.MainActivityFragment">
+
+    <ImageButton
+        android:id="@+id/playerButton"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="170dp"
+        android:layout_height="160dp"
+        android:onClick="loadPlayers"
+        android:src="@drawable/ic_social_people"
+        android:text="@string/title_button_players" />
+
+    <ImageButton
+        android:id="@+id/tankButton"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="170dp"
+        android:layout_height="160dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/playerButton"
+        android:onClick="loadTanks"
+        android:src="@drawable/ic_ussr_is"
+        android:text="@string/title_button_players" />
+
+
+    <FrameLayout
+        android:id="@+id/child_fragment"
+        android:layout_width="fill_parent"
+        android:layout_height="250dip"
+        android:layout_alignEnd="@+id/tankButton"
+        android:layout_alignParentBottom="true" />
+
+
+</RelativeLayout>

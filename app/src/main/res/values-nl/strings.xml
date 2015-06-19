@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">World of Tanks</string>
+    <string name="action_settings">Instellingen</string>
+    <string name="action_login">Login</string>
+    <string name="error_fill_field">Vul tenminste 4 karakters in</string>
+    <string name="navigation_drawer_close">Sluit</string>
+    <string name="navigation_drawer_open">Open</string>
+    <string name="player_name">Spelers naam</string>
+    <string name="pref_description_keep_logged_in">Wil je ingelogd blijven?</string>
+    <string name="pref_header_general">Algemeen</string>
+    <string name="pref_header_language">Taal</string>
+    <string name="pref_header_notifications">Notificaties</string>
+    <string name="pref_ringtone_silent">Stil</string>
+    <string name="pref_title_keep_logged_in">Ingelogd blijven</string>
+    <string name="pref_title_language">Kies taal</string>
+    <string name="search_button">Zoek</string>
+    <string name="search_hint">Zoek opdracht</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_settings">Instellingen</string>
+    <string name="title_activity_settings_fragment">Instellingen</string>
+    <string name="title_button_account">Account</string>
+    <string name="title_button_login">Login</string>
+    <string name="title_button_news">Nieuws</string>
+    <string name="title_button_players">Spelers</string>
+    <string name="title_button_settings">Instellingen</string>
+    <string name="title_button_tanks">Tanks</string>
+    <string name="title_section1">Home</string>
+    <string name="title_section2">Spelers</string>
+    <string name="title_section3">Tanks</string>
+    <string name="action_logout">logout</string>
+    <string name="PlayerDetailCardContentDescriptionImage">Detail image</string>
+    <string name="ListViewPlayerImageContentDescription">Account Image</string>
+    <string name="could_not_get_data">Unable to fetch data from server</string>
+</resources>
