@@ -5,8 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jdkmedia.vh8.MainActivity;
 import com.jdkmedia.vh8.R;
 import com.jdkmedia.vh8.domain.PlayerDetailCard;
 
@@ -51,6 +53,7 @@ public class PlayerDetailCardAdapter extends RecyclerView.Adapter<PlayerDetailCa
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.mainTitle.setText(mDataset.get(position).getMainTitle());
         holder.subTitle.setText(mDataset.get(position).getSubTitle());
+        holder.image.setImageResource(mDataset.get(position).getImageLocation());
     }
 
     @Override

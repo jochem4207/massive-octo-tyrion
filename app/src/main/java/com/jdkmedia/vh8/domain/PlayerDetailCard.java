@@ -8,17 +8,14 @@ import android.media.Image;
 public class PlayerDetailCard {
     private String mainTitle;
     private String subTitle;
-    private Image image;
+    private int imageLocation;
 
-    public PlayerDetailCard(String mainTitle, String subTitle, Image image) {
+    public PlayerDetailCard(String mainTitle, String subTitle, int imageLocation) {
         this.mainTitle = mainTitle;
         this.subTitle = subTitle;
-        this.image = image;
+        this.imageLocation = imageLocation;
     }
 
-    public Image getImage() {
-        return image;
-    }
     public String getMainTitle() {
         return mainTitle;
     }
@@ -29,10 +26,15 @@ public class PlayerDetailCard {
     public void setMainTitle(String mainTitle) {
         this.mainTitle = mainTitle;
     }
-    public void setImage(Image image) {
-        this.image = image;
-    }
     public void setSubTitle(String subTitle) {
         this.subTitle = subTitle;
+    }
+
+    public int getImageLocation() {
+        return imageLocation;
+    }
+
+    public void setImageLocation(int imageLocation) {
+        this.imageLocation = imageLocation;
     }
 }

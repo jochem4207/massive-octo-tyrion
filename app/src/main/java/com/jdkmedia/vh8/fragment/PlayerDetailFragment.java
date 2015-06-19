@@ -71,12 +71,19 @@ public class PlayerDetailFragment extends Fragment {
         //Achievements
 
         //Tank count
+        PlayerDetailCard tankCountCard = new PlayerDetailCard("Tanks", Integer.toString(playerExtended.getTankCount()) ,R.mipmap.ic_mastery_1);
+        PlayerDetailCard mastersOfExcellenceOneCard = new PlayerDetailCard("Masters Of Excellence 1", Integer.toString(playerExtended.getMarksOfExcellenceCount(1)),R.mipmap.ic_mastery_1);
+        PlayerDetailCard mastersOfExcellenceTwoCard = new PlayerDetailCard("Masters Of Excellence 2", Integer.toString(playerExtended.getMarksOfExcellenceCount(2)),R.mipmap.ic_mastery_1);
+        PlayerDetailCard mastersOfExcellenceThreeCard = new PlayerDetailCard("Masters Of Excellence 3", Integer.toString(playerExtended.getMarksOfExcellenceCount(3)),R.mipmap.ic_mastery_1);
+        PlayerDetailCard mastersOfExcellenceFourCard = new PlayerDetailCard("Masters Of Excellence 4", Integer.toString(playerExtended.getMarksOfExcellenceCount(4)),R.mipmap.ic_mastery_1);
+
+        results.add(tankCountCard);
+        results.add(mastersOfExcellenceOneCard);
+        results.add(mastersOfExcellenceTwoCard);
+        results.add(mastersOfExcellenceThreeCard);
+        results.add(mastersOfExcellenceFourCard);
 
 
-        for (int index = 0; index < 20; index++) {
-            PlayerDetailCard demoTank = new PlayerDetailCard("Main","Sub", null);
-            results.add(index, demoTank);
-        }
         return results;
     }
 

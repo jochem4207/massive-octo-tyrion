@@ -6,8 +6,26 @@ import com.google.gson.annotations.SerializedName;
  * Created by jochem on 19-06-15.
  */
 public class PlayerTank {
-    @SerializedName("mark_of_mastery")
-    public int markOfMastery;
+
     @SerializedName("tank_id")
-    public int tankId;
+    private int tankId;
+
+    @SerializedName("mark_of_mastery")
+    private int markOfMastery;
+
+    public int getTankId() {
+        return tankId;
+    }
+
+    public int getMarkOfMastery() {
+        return markOfMastery;
+    }
+
+    public void setMarkOfMastery(int markOfMastery) {
+        this.markOfMastery = markOfMastery;
+    }
+
+    public void setTankId(int tankId) {
+        this.tankId = tankId;
+    }
 }
