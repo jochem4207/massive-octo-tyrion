@@ -4,8 +4,12 @@ import android.app.Activity;
 import android.app.ListFragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -13,9 +17,11 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.jdkmedia.vh8.MainActivity;
 import com.jdkmedia.vh8.R;
 import com.jdkmedia.vh8.adapters.PlayerListAdapter;
 import com.jdkmedia.vh8.api.JsonResultPlayerQuery;
@@ -68,9 +74,40 @@ public class PlayerSearchMainFragment extends ListFragment implements AbsListVie
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+        setHasOptionsMenu(true);
+
     }
 
 
+    @Override
+    public void onCreateOptionsMenu (Menu menu, MenuInflater inflater) {
+//        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.search_menu, menu);
+        MenuItem item = menu.findItem(R.id.search_menu);
+        if(getActivity() != null){
+            SearchView sv = new SearchView((getActivity()).getActionBar().getThemedContext());
+            MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
+            MenuItemCompat.setActionView(item, sv);
+            sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    System.out.println("search query submit");
+
+                    if(query.length() > 3 ){
+                        getPlayers(query);
+                        return false;
+                    }
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    System.out.println("tap");
+                    return false;
+                }
+            });
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -103,21 +140,6 @@ public class PlayerSearchMainFragment extends ListFragment implements AbsListVie
     @Override
     public void onStart(){
         super.onStart();
-        if(getView() != null){
-            Button button = (Button) getView().findViewById(R.id.search_button);
-            button.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    //TODO: check if it is here on the right place
-                    //Get players
-                    Log.i(APP + " Class: " + TAG, "Get Players is being called");
-                    getPlayers();
-                    //The interface will be called after getPlayers to change the view with results
-                }
-            });
-        }
     }
 
     @Override
@@ -191,24 +213,20 @@ public class PlayerSearchMainFragment extends ListFragment implements AbsListVie
 
     //SEARCH PLAYERS
 
-    public void getPlayers() {
+    public void getPlayers(String query) {
         if(getView() != null){
-            EditText editText = (EditText) getView().findViewById(R.id.search_query);
 
-            if(editText != null && editText.length() > 3 ){
-                //TODO: check if edit text is a good "input field"
-                String query = editText.getText().toString();
 
-                //Log the input
-                Log.i(APP + " Class: " + TAG, "Search:"+ query);
+            //Log the input
+            Log.i(APP + " Class: " + TAG, "Search:"+ query);
 
-                //Call api to get result
-                new CallAPI().execute(API_URL + API_CALL + APPLICATION_ID + API_OPTION + query);
+            //Call api to get result
+            new CallAPI().execute(API_URL + API_CALL + APPLICATION_ID + API_OPTION + query);
 
-            }else{
-                //Give a toast error
-                Toast.makeText(getActivity(), getString(R.string.error_fill_field), Toast.LENGTH_LONG).show();
-            }
+        }else{
+            //Give a toast error
+            Toast.makeText(getActivity(), getString(R.string.error_fill_field), Toast.LENGTH_LONG).show();
+
         }
     }
 
