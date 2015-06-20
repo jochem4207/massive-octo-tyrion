@@ -301,18 +301,19 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
 
                     //For every entry set create a playerExtended
                     for (Map.Entry<String, JsonElement> entry : obj.entrySet()) {
+
                         //Can be multiple players (api allows, app does not!)
                         playerExtended = new Gson().fromJson(entry.getValue(), PlayerExtended.class);
+
                         Log.d(APP + " Class: " + TAG, playerExtended.getNickname());
                     }
 
                 } else if (status.equals("error")) {
                     //api error
-                    Log.d(APP + " Class: " + TAG, "API EXCEPTION");
+                    Log.e(APP + " Class: " + TAG, "API EXCEPTION" + status);
                 }
 
             }catch (IOException e) {
-
                 Log.e(APP + " Class: " + TAG, "IOException in getting player details :" + e);
                 return false;
             }
@@ -320,25 +321,40 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
             try{
 
                 //Get players tanks info
-                URL urlGetPlayerTanks = new URL("https://api.worldoftanks.eu/wot/account/tanks/?application_id=" + APPLICATION_ID +"&account_id=" + params[0].accountId);
+                URL url = new URL("https://api.worldoftanks.eu/wot/account/tanks/?application_id=" + APPLICATION_ID +"&account_id=" + params[0].accountId);
                 //open stream
-                InputStream inputPlayerTanks = urlGetPlayerTanks.openStream();
+                InputStream input = url.openStream();
                 //Open reader
-                Reader readerPlayerTanks = new InputStreamReader(inputPlayerTanks);
+                Reader reader = new InputStreamReader(input);
 
                 //Parse the result
-                JsonElement rootPlayerTanks = new JsonParser().parse(readerPlayerTanks);
+                JsonElement root = new JsonParser().parse(reader);
                 //Get the status
-                String statusPlayerTanks = rootPlayerTanks.getAsJsonObject().get("status").getAsString();
-                if (statusPlayerTanks.equals("ok")) {
+                String status = root.getAsJsonObject().get("status").getAsString();
+                if (status.equals("ok")) {
+                    //Get the data as a object in json, to loop trough
+                    JsonObject obj = root.getAsJsonObject().get("data").getAsJsonObject();
 
-                    JsonObject obj1 = rootPlayerTanks.getAsJsonObject().get("data").getAsJsonObject();
-                    for (Map.Entry<String, JsonElement> entry : obj1.entrySet()) {
+                    //For every obj in the list
+                    for (Map.Entry<String, JsonElement> entry : obj.entrySet()) {
+
+                        //Create a typetoken
                         Type listType = new TypeToken<List<PlayerTank>>() {}.getType();
-                        List<PlayerTank> playerTanks = (List<PlayerTank>) new Gson().fromJson(entry.getValue(), listType);
-                        playerExtended.setPlayerTankList(playerTanks);
+
+                        //use gson to create java objects
+                        List<PlayerTank> playerTanks = new Gson().fromJson(entry.getValue(), listType);
+
+                        //add the results to the player
+                        if(playerTanks != null){
+                            playerExtended.setPlayerTankList(playerTanks);
+                        }
                     }
+
+                }else if (status.equals("error")) {
+                    //api error
+                    Log.e(APP + " Class: " + TAG, "API EXCEPTION" + status);
                 }
+
             } catch (IOException e) {
                 Log.e(APP + " Class: " + TAG, "IOException in getting player tanks:" + e);
                 return false;
@@ -372,7 +388,6 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
                 Log.d(APP + " Class: " + TAG, "Transaction committed");
             }
         }
-
     }
 
     /**
