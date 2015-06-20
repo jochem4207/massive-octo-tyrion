@@ -3,6 +3,7 @@ package com.jdkmedia.vh8.fragment;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,14 +14,9 @@ import com.jdkmedia.vh8.domain.PlayerExtended;
 
 public class PlayerDetailInnerFragment extends Fragment {
 
-    //Debugging
+    //Logging
     public final String TAG = getClass().getName() + " ";
-    public static final String APP = "JdkMedia ";
-
-    //The Adapter for cards
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    public static final String APP = "World of tanks ";
 
     //Player detail
     private PlayerExtended player;
@@ -29,7 +25,12 @@ public class PlayerDetailInnerFragment extends Fragment {
         // Required empty public constructor
     }
 
+    /**
+     * Constructor for the fragment
+     * @param loggedInPlayer the player that is logged in or null
+     */
     public PlayerDetailInnerFragment(PlayerExtended loggedInPlayer) {
+        Log.d(APP + " Class: " + TAG, "Creating new player detail innerfragment");
         this.player = loggedInPlayer;
     }
 
@@ -43,6 +44,8 @@ public class PlayerDetailInnerFragment extends Fragment {
         //Get the args
         View view;
         if(player == null) {
+            Log.d(APP + " Class: " + TAG, "Player is not logged in, load error view");
+
             //Load error view
             view = inflater.inflate(R.layout.fragment_player_detail_not_logged_in, container, false);
 
@@ -51,7 +54,9 @@ public class PlayerDetailInnerFragment extends Fragment {
             playerDetailNotLoggedInTextView.setText(R.string.login_message_home_screen);
 
         }else{
-             view = inflater.inflate(R.layout.fragment_player_detail_inner, container, false);
+            Log.d(APP + " Class: " + TAG, "Player is logged in, load details view");
+
+            view = inflater.inflate(R.layout.fragment_player_detail_inner, container, false);
 
             //Show some player details
             TextView playerName = (TextView) view.findViewById(R.id.playerName);
