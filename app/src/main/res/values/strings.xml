@@ -60,4 +60,5 @@
     <string name="drawer_close">Menu closed</string>
     <string name="tankButton">goToTankList</string>
     <string name="homeScreenPlayerButton">goToPlayerSearch</string>
+    <string name="contentDescriptionFragmentPlayerDetail">Player Icon</string>
 </resources>

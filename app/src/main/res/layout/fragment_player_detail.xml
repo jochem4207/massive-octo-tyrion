@@ -9,13 +9,12 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:src="@drawable/ic_account_box_black_24dp"
         android:maxWidth="16dp"
         android:minHeight="16dp"
-        android:contentDescription="Player Icon"
+        android:contentDescription="@string/contentDescriptionFragmentPlayerDetail"
 
         />
 
@@ -24,7 +23,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignWithParentIfMissing="true"
-        android:layout_centerVertical="true"
         android:layout_marginStart="72dp"
         android:layout_marginEnd="16dp"
         android:orientation="vertical"
@@ -36,21 +34,16 @@
             android:id="@+id/playerName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="preview"
-            android:layout_alignParentTop="true"
-            android:layout_alignStart="@+id/textview_container" />
+            />
 
     </LinearLayout>
-
-
-
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/tank_list"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="match_parent"
         android:scrollbars="vertical"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imageView" />
 
 </RelativeLayout>
