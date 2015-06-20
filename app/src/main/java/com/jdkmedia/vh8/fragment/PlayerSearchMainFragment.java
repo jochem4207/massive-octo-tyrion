@@ -41,8 +41,9 @@ public class PlayerSearchMainFragment extends ListFragment implements AbsListVie
     private static final String API_CALL = "account/list/";
     private static final String API_OPTION = "&search=";
 
+    //Logging
     public final String TAG = getClass().getName() + " ";
-    public static final String APP = "JdkMedia ";
+    public static final String APP = "World of tanks ";
 
     /**
      * The fragment's ListView/GridView.
@@ -71,7 +72,10 @@ public class PlayerSearchMainFragment extends ListFragment implements AbsListVie
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Retain instance state to save input
         setRetainInstance(true);
+
+        //SetHasoptions menu to create a different options menu than the activity has
         setHasOptionsMenu(true);
 
     }
