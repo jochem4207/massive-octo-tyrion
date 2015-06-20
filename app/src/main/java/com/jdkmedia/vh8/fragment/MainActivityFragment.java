@@ -110,6 +110,10 @@ public class MainActivityFragment extends Fragment {
 
 
     public interface OnLoadDetailFragment {
-        public void onLoadDetailFragment(PlayerExtended player);
+        /**
+         * If the player is logged in, send it to the main activity to get extended details
+         * @param playerExtended the logged in player
+         */
+        public void onLoadDetailFragment(PlayerExtended playerExtended);
     }
 }

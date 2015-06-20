@@ -201,6 +201,11 @@ public class PlayerSearchMainFragment extends ListFragment implements AbsListVie
     }
 
     public interface OnPlayerSelectedListener {
+        /**
+         * If a player is selected in the list send the player to the main activity
+         * The main activity will get details and show a detail view
+         * @param player selected player
+         */
         public void onPlayerSelected(Player player);
     }
 
