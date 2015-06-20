@@ -241,12 +241,18 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
 
     @Override
     public void onLoadDetailFragment(PlayerExtended playerExtended) {
-        Log.i(APP + " Class: " + TAG, "OnPlayerSelected user is logged in");
+        Log.d(APP + " Class: " + TAG, "OnPlayerSelected user is logged in");
         MyTaskParams taskParams = new MyTaskParams(API_URL + API_CALL + APPLICATION_ID + API_OPTION_AUTH + accessToken + API_OPTION + playerExtended.getAccountId(), true, playerExtended.getAccountId());
         new CallAPI().execute(taskParams);
     }
 
 
+    /**
+     * Class to give multiple params to the asynctask
+     * url: The url to get the json from
+     * innerfragment: home screen or detail screen (true or false)
+     * accountId: the account id from the player to get details from
+     */
     private static class MyTaskParams {
         String url;
         boolean innerFragment;
@@ -259,19 +265,21 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
         }
     }
 
-
-    //API + NEW FRAGMENT
+    /*
+        API to get information from players to show detailed view
+     */
     public class CallAPI extends AsyncTask<MyTaskParams, Void, Boolean> {
         private PlayerExtended playerExtended;
         private boolean innerFragment = false;
 
         @Override
         protected Boolean doInBackground(MyTaskParams... params) {
-            //Get url from params
+
+            //Get properties from params
             String urlString = params[0].url;
             innerFragment = params[0].innerFragment;
 
-            Log.i(APP + " Class: " + TAG, "Async task: Get player details: Url:" + urlString);
+            Log.d(APP + " Class: " + TAG, "Async task: Get player details: Url:" + urlString);
 
             // Get output from api
             try {
@@ -281,7 +289,6 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
                 InputStream input = url.openStream();
                 //Open reader
                 Reader reader = new InputStreamReader(input);
-                //Json to class
 
                 //Parse the result
                 JsonElement root = new JsonParser().parse(reader);
@@ -296,47 +303,44 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
                     for (Map.Entry<String, JsonElement> entry : obj.entrySet()) {
                         //Can be multiple players (api allows, app does not!)
                         playerExtended = new Gson().fromJson(entry.getValue(), PlayerExtended.class);
-                        Log.e(APP + " Class: " + TAG, playerExtended.getNickname());
+                        Log.d(APP + " Class: " + TAG, playerExtended.getNickname());
                     }
 
-                    //Achievements
-                    //
                 } else if (status.equals("error")) {
                     //api error
-                    Log.e(APP + " Class: " + TAG, "API EXCEPTION");
+                    Log.d(APP + " Class: " + TAG, "API EXCEPTION");
                 }
 
+            }catch (IOException e) {
 
-                //TODO MAKE ACCOUNT ID fix
+                Log.e(APP + " Class: " + TAG, "IOException in getting player details :" + e);
+                return false;
+            }
+
+            try{
 
                 //Get players tanks info
-                URL urlGetPlayerTanks = new URL("https://api.worldoftanks.eu/wot/account/tanks/?application_id=demo&account_id=" + params[0].accountId);
+                URL urlGetPlayerTanks = new URL("https://api.worldoftanks.eu/wot/account/tanks/?application_id=" + APPLICATION_ID +"&account_id=" + params[0].accountId);
                 //open stream
                 InputStream inputPlayerTanks = urlGetPlayerTanks.openStream();
                 //Open reader
                 Reader readerPlayerTanks = new InputStreamReader(inputPlayerTanks);
-                //Json to class
+
                 //Parse the result
                 JsonElement rootPlayerTanks = new JsonParser().parse(readerPlayerTanks);
                 //Get the status
                 String statusPlayerTanks = rootPlayerTanks.getAsJsonObject().get("status").getAsString();
                 if (statusPlayerTanks.equals("ok")) {
+
                     JsonObject obj1 = rootPlayerTanks.getAsJsonObject().get("data").getAsJsonObject();
                     for (Map.Entry<String, JsonElement> entry : obj1.entrySet()) {
-//                        playerExtended = new Gson().fromJson(entry.getValue(), PlayerExtended.class);
-                        //forech entry.getValue -> creer klas
-                        //Gson Jsonarray
-                        Type listType = new TypeToken<List<PlayerTank>>() {
-                        }.getType();
+                        Type listType = new TypeToken<List<PlayerTank>>() {}.getType();
                         List<PlayerTank> playerTanks = (List<PlayerTank>) new Gson().fromJson(entry.getValue(), listType);
                         playerExtended.setPlayerTankList(playerTanks);
-
                     }
-                    //For every entry set create a playerExtended
-
                 }
             } catch (IOException e) {
-                Log.i(APP + " Class: " + TAG, "IOException:" + e);
+                Log.e(APP + " Class: " + TAG, "IOException in getting player tanks:" + e);
                 return false;
             }
 
@@ -345,7 +349,7 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
         }
 
         protected void onPostExecute(Boolean result) {
-            Log.i(APP + " Class: " + TAG, "Result onpost execute:" + result);
+            Log.d(APP + " Class: " + TAG, "Result onpost execute:" + result);
             if (result) {
 
                 //Only get details for logged in player if its the inner fragment
@@ -353,9 +357,6 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
                     playerExtended.setAccessToken(accessToken);
                 }
 
-                //Detail fragments
-
-                //Manage fragment
                 FragmentManager fragmentManager = getFragmentManager();
 
                 if (innerFragment) {
@@ -363,49 +364,38 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
                     fragmentManager.beginTransaction()
                             .replace(R.id.child_fragment, playerDetailInnerFragment, playerDetailInnerFragment.getClass().getName()).addToBackStack(playerDetailInnerFragment.getClass().getName()).commit();
                 } else {
-                    //Fill player data as good as possible
-                    //player details -> done
-
-                    //Get players tanks
-
-                    //https://api.worldoftanks.eu/wot/account/tanks/?application_id=demo&account_id=504337382
-
-                    //Amount of masterys
-                    //Amount of tanks
-
 
                     PlayerDetailFragment playerDetailFragment = new PlayerDetailFragment(playerExtended);
                     fragmentManager.beginTransaction()
                             .replace(R.id.container, playerDetailFragment, playerDetailFragment.getClass().getName()).addToBackStack(playerDetailFragment.getClass().getName()).commit();
                 }
-                Log.i(APP + " Class: " + TAG, "Transaction committed");
+                Log.d(APP + " Class: " + TAG, "Transaction committed");
             }
         }
 
     }
 
     /**
-     * Called when the user touches the button
+     * Called when the user touches the button on the home screen
      */
     public void loadPlayers(View view) {
         PlayerSearchMainFragment playerSearchMainFragment = new PlayerSearchMainFragment();
-
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, playerSearchMainFragment, playerSearchMainFragment.getClass().getName()).addToBackStack(playerSearchMainFragment.getClass().getName()).commit();
-
+        replaceFragment(playerSearchMainFragment);
     }
 
     /**
-     * Called when the user touches the button
+     * Called when the user touches the button on the home screen
      */
     public void loadTanks(View view) {
         TankListFragment tankListFragment = new TankListFragment();
+        replaceFragment(tankListFragment);
+    }
 
+
+    public void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, tankListFragment, tankListFragment.getClass().getName()).addToBackStack(tankListFragment.getClass().getName()).commit();
-
+                .replace(R.id.container, fragment, fragment.getClass().getName()).addToBackStack(fragment.getClass().getName()).commit();
     }
 
 

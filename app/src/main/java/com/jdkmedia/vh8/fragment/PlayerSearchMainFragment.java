@@ -14,14 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.jdkmedia.vh8.MainActivity;
 import com.jdkmedia.vh8.R;
 import com.jdkmedia.vh8.adapters.PlayerListAdapter;
 import com.jdkmedia.vh8.api.JsonResultPlayerQuery;
@@ -56,14 +53,15 @@ public class PlayerSearchMainFragment extends ListFragment implements AbsListVie
 
     //Result api
     private JsonResultPlayerQuery JsonResult;
-   /*
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
 
-     * @return A new instance of fragment PlayerSearchMainFragment.
-     */
+    /*
+      * Use this factory method to create a new instance of
+      * this fragment using the provided parameters.
+
+      * @return A new instance of fragment PlayerSearchMainFragment.
+      */
     public static PlayerSearchMainFragment newInstance() {
-         return new PlayerSearchMainFragment();
+        return new PlayerSearchMainFragment();
     }
 
     public PlayerSearchMainFragment() {
@@ -78,13 +76,12 @@ public class PlayerSearchMainFragment extends ListFragment implements AbsListVie
 
     }
 
-
     @Override
-    public void onCreateOptionsMenu (Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 //        super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.search_menu, menu);
         MenuItem item = menu.findItem(R.id.search_menu);
-        if(getActivity() != null){
+        if (getActivity() != null) {
             SearchView sv = new SearchView((getActivity()).getActionBar().getThemedContext());
             MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
             MenuItemCompat.setActionView(item, sv);
@@ -93,7 +90,7 @@ public class PlayerSearchMainFragment extends ListFragment implements AbsListVie
                 public boolean onQueryTextSubmit(String query) {
                     System.out.println("search query submit");
 
-                    if(query.length() > 3 ){
+                    if (query.length() > 3) {
                         getPlayers(query);
                         return false;
                     }
@@ -104,7 +101,6 @@ public class PlayerSearchMainFragment extends ListFragment implements AbsListVie
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                    System.out.println("tap");
                     return false;
                 }
             });
@@ -132,15 +128,14 @@ public class PlayerSearchMainFragment extends ListFragment implements AbsListVie
 
         Log.i(APP + " Class: " + TAG, "Returning view 1");
 
-        if(savedInstanceState!=null && JsonResult != null)
-        {
+        if (savedInstanceState != null && JsonResult != null) {
             JsonResult = (JsonResultPlayerQuery) savedInstanceState.getSerializable("search_result");
         }
         return view;
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
     }
 
@@ -162,8 +157,7 @@ public class PlayerSearchMainFragment extends ListFragment implements AbsListVie
     }
 
     @Override
-    public void onSaveInstanceState (Bundle outState)
-    {
+    public void onSaveInstanceState(Bundle outState) {
         outState.putSerializable("search_result", JsonResult);
     }
 
@@ -174,18 +168,8 @@ public class PlayerSearchMainFragment extends ListFragment implements AbsListVie
     }
 
 
-    //SHOW PLAYERS
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        // do something with the data
-        //get player from postion
-        //give it to the main activity
-        mListener.onPlayerSelected((Player)mAdapter.getItem(position));
-        Log.i(APP + " Class: " + TAG, "PlayerListFragment Position clicked" + Integer.toString(position));
-    }
-
     //To update the fragment with data
-    private void updateFragment(JsonResultPlayerQuery data){
+    private void updateFragment(JsonResultPlayerQuery data) {
         Log.i(APP + " Class: " + TAG, "Get new data");
         Log.i(APP + " Class: " + TAG, data.toString());
 
@@ -200,37 +184,20 @@ public class PlayerSearchMainFragment extends ListFragment implements AbsListVie
         mAdapter.notifyDataSetChanged();
     }
 
-    public interface OnPlayerSelectedListener {
-        /**
-         * If a player is selected in the list send the player to the main activity
-         * The main activity will get details and show a detail view
-         * @param player selected player
-         */
-        public void onPlayerSelected(Player player);
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (null != mListener) {
-            // Notify the active callbacks interface (the activity, if the
-            // fragment is attached to one) that an item has been selected.
-            //  mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
-        }
-    }
 
     //SEARCH PLAYERS
 
     public void getPlayers(String query) {
-        if(getView() != null){
+        if (getView() != null) {
 
 
             //Log the input
-            Log.i(APP + " Class: " + TAG, "Search:"+ query);
+            Log.i(APP + " Class: " + TAG, "Search:" + query);
 
             //Call api to get result
             new CallAPI().execute(API_URL + API_CALL + APPLICATION_ID + API_OPTION + query);
 
-        }else{
+        } else {
             //Give a toast error
             Toast.makeText(getActivity(), getString(R.string.error_fill_field), Toast.LENGTH_LONG).show();
 
@@ -240,10 +207,10 @@ public class PlayerSearchMainFragment extends ListFragment implements AbsListVie
     private class CallAPI extends AsyncTask<String, Void, Boolean> {
         @Override
         protected Boolean doInBackground(String... params) {
-            Log.i(APP + " Class: " + TAG, "JsonAsyncTask URL:"+ params[0]);
+            Log.i(APP + " Class: " + TAG, "JsonAsyncTask URL:" + params[0]);
 
             //Get url from params
-            String urlString=params[0];
+            String urlString = params[0];
 
             // Get output from api
             try {
@@ -254,10 +221,10 @@ public class PlayerSearchMainFragment extends ListFragment implements AbsListVie
                 //Open reader
                 Reader reader = new InputStreamReader(input);
                 //Json to class
-                JsonResultPlayerQuery result  = new Gson().fromJson(reader, JsonResultPlayerQuery.class);
-                if(result != null){
+                JsonResultPlayerQuery result = new Gson().fromJson(reader, JsonResultPlayerQuery.class);
+                if (result != null) {
                     JsonResult = result;
-                }else{
+                } else {
                     Log.i(APP + " Class: " + TAG, "Unhandled Error in Call API");
                 }
 
@@ -273,13 +240,44 @@ public class PlayerSearchMainFragment extends ListFragment implements AbsListVie
             Log.e(APP + " Class: " + TAG, "OnPostExecute result" + result);
             if (!result) {
                 Toast.makeText(getActivity(), getString(R.string.could_not_get_data), Toast.LENGTH_LONG).show();
-            }else{
+            } else {
 
                 updateFragment(JsonResult);
 
                 Log.e(APP + " Class: " + TAG, "OnPostExecute result player" + JsonResult.toString());
             }
         }
+    }
+
+    //SHOW PLAYERS
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        // do something with the data
+        //get player from postion
+        //give it to the main activity
+        mListener.onPlayerSelected((Player) mAdapter.getItem(position));
+        Log.i(APP + " Class: " + TAG, "PlayerListFragment Position clicked" + Integer.toString(position));
+    }
+
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (null != mListener) {
+            // Notify the active callbacks interface (the activity, if the
+            // fragment is attached to one) that an item has been selected.
+            //  mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
+        }
+    }
+
+
+    public interface OnPlayerSelectedListener {
+        /**
+         * If a player is selected in the list send the player to the main activity
+         * The main activity will get details and show a detail view
+         *
+         * @param player selected player
+         */
+        public void onPlayerSelected(Player player);
     }
 }
 
