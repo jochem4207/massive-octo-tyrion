@@ -58,4 +58,6 @@
     <!-- nav drawer -->
     <string name="drawer_open">Menu opened</string>
     <string name="drawer_close">Menu closed</string>
+    <string name="tankButton">goToTankList</string>
+    <string name="homeScreenPlayerButton">goToPlayerSearch</string>
 </resources>

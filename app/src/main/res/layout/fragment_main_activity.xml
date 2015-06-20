@@ -12,7 +12,8 @@
         android:layout_height="160dp"
         android:onClick="loadPlayers"
         android:src="@drawable/ic_social_people"
-        android:text="@string/title_button_players" />
+        android:text="@string/title_button_players"
+        android:contentDescription="@string/homeScreenPlayerButton" />
 
     <ImageButton
         android:id="@+id/tankButton"
@@ -24,7 +25,8 @@
         android:layout_toEndOf="@+id/playerButton"
         android:onClick="loadTanks"
         android:src="@drawable/ic_ussr_is"
-        android:text="@string/title_button_players" />
+        android:text="@string/title_button_players"
+        android:contentDescription="@string/tankButton" />
 
 
     <FrameLayout

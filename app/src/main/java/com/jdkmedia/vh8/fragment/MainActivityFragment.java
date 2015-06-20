@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,10 @@ public class MainActivityFragment extends Fragment {
     private PlayerExtended loggedInPlayer;
     private OnLoadDetailFragment mListener;
 
+    //Logging
+    public final String TAG = getClass().getName() + " ";
+    public static final String APP = "World of tanks ";
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -23,10 +28,20 @@ public class MainActivityFragment extends Fragment {
      * @return A new instance of fragment MainActivityFragment.
      */
     public static MainActivityFragment newInstance(PlayerExtended playerExtended) {
+
+        //Create a instance with the logged in player in the bundle
         MainActivityFragment fragment = new MainActivityFragment();
         Bundle args = new Bundle();
+
         args.putSerializable("loggedInPlayer", playerExtended);
         fragment.setArguments(args);
+
+        //Logging
+        if(playerExtended != null) {
+            Log.d(APP + " Class: ", "New instance created with player" + playerExtended.toString());
+        }else{
+            Log.d(APP + " Class: ", "New instance created without player");
+        }
         return fragment;
     }
 
@@ -38,13 +53,23 @@ public class MainActivityFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            //Get the logged in player
             loggedInPlayer = (PlayerExtended) getArguments().getSerializable("loggedInPlayer");
+
+
+            //Logging
+            if(loggedInPlayer != null){
+                Log.d(APP + " Class: ", "On create retrevied loggedInPlayer" + loggedInPlayer);
+            }else{
+                Log.d(APP + " Class: ", "On create  retrevied no player");
+            }
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Log.d(APP + " Class: ", "Oncreate view loading fragment main activity");
         return inflater.inflate(R.layout.fragment_main_activity, container, false);
     }
 
@@ -52,9 +77,12 @@ public class MainActivityFragment extends Fragment {
     public void onStart() {
         super.onStart();
         if(loggedInPlayer != null){
+            //Load the detailed user info for the fragment on the home screen
+            Log.d(APP + " Class: ", "Player is logged in loading detail inner fragment");
             mListener.onLoadDetailFragment(loggedInPlayer);
         }else{
-            //Don't LOAD THE USERS DETAILS because the user is not logged in
+            //Don't load anything, use rnot logged in
+            Log.d(APP + " Class: ", "Player is not logged in loading detail inner fragment empty!");
 
             //Detail fragment
             PlayerDetailInnerFragment playerDetailInnerFragment = new PlayerDetailInnerFragment(null);
@@ -69,6 +97,8 @@ public class MainActivityFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        //To lock orientation change
         if (getActivity() != null) {
             getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
@@ -77,6 +107,8 @@ public class MainActivityFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+
+        //To lock orientation change
         if (getActivity() != null) {
             getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
         }
@@ -85,6 +117,8 @@ public class MainActivityFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
+        //Delete the inner fragment to make sure everything gets deleted
         PlayerDetailInnerFragment f = (PlayerDetailInnerFragment) getFragmentManager()
                 .findFragmentById(R.id.player_detail_fragment);
         if (f != null)

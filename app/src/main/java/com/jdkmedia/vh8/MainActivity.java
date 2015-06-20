@@ -144,7 +144,7 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
             }
 
             if (fragment != null) {
-                Log.d(APP + " Class: " + TAG, "Fragment is not null - transaction");
+                Log.d(APP + " Class: " + TAG, "Fragment is not null - transaction started");
                 //Get the manager
                 FragmentManager fragmentManager = getFragmentManager();
                 //Replace the fragment
@@ -394,6 +394,7 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
      * Called when the user touches the button on the home screen
      */
     public void loadPlayers(View view) {
+        Log.d(APP + " Class: " + TAG, "Clicked on the load players button");
         PlayerSearchMainFragment playerSearchMainFragment = new PlayerSearchMainFragment();
         replaceFragment(playerSearchMainFragment);
     }
@@ -402,12 +403,16 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
      * Called when the user touches the button on the home screen
      */
     public void loadTanks(View view) {
+        Log.d(APP + " Class: " + TAG, "Clicked on the load Tanks button");
         TankListFragment tankListFragment = new TankListFragment();
         replaceFragment(tankListFragment);
     }
 
 
     public void replaceFragment(Fragment fragment){
+        Log.d(APP + " Class: " + TAG, fragment.getClass().getName() +" selected");
+        Log.d(APP + " Class: " + TAG, "Transaction started");
+
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.container, fragment, fragment.getClass().getName()).addToBackStack(fragment.getClass().getName()).commit();

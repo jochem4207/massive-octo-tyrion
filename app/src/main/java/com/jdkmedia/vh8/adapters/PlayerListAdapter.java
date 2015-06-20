@@ -18,7 +18,6 @@ import java.util.List;
  * Created by jochem on 09-05-15.
  */
 
-//TODO: IMPLEMENT SOMETHING to refresh list
 public class PlayerListAdapter extends BaseAdapter {
 
     private List<Player> mList;
