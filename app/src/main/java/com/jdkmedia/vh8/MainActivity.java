@@ -310,7 +310,7 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
 
                 } else if (status.equals("error")) {
                     //api error
-                    Log.e(APP + " Class: " + TAG, "API EXCEPTION" + status);
+                    Log.e(APP + " Class: " + TAG, "API EXCEPTION  in getting player details" + status);
                 }
 
             }catch (IOException e) {
@@ -321,7 +321,7 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
             try{
 
                 //Get players tanks info
-                URL url = new URL("https://api.worldoftanks.eu/wot/account/tanks/?application_id=" + APPLICATION_ID +"&account_id=" + params[0].accountId);
+                URL url = new URL("https://api.worldoftanks.eu/wot/account/tanks/?application_id=74da03a344137eb2756c49c9e9069092&account_id=" + params[0].accountId);
                 //open stream
                 InputStream input = url.openStream();
                 //Open reader
@@ -345,14 +345,14 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
                         List<PlayerTank> playerTanks = new Gson().fromJson(entry.getValue(), listType);
 
                         //add the results to the player
-                        if(playerTanks != null){
+//                        if(playerTanks != null){
                             playerExtended.setPlayerTankList(playerTanks);
-                        }
+//                        }
                     }
 
                 }else if (status.equals("error")) {
                     //api error
-                    Log.e(APP + " Class: " + TAG, "API EXCEPTION" + status);
+                    Log.e(APP + " Class: " + TAG, "API EXCEPTION  in getting player tanks" + status);
                 }
 
             } catch (IOException e) {
