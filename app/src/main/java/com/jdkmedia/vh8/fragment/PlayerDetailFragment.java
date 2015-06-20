@@ -51,7 +51,7 @@ public class PlayerDetailFragment extends Fragment {
 
         //Create data for cards here
 
-        //Load adapter
+//        //Load adapter
         mAdapter = new PlayerDetailCardAdapter(getDataSet(playerExtended));
         mRecyclerView = (RecyclerView) view.findViewById(R.id.tank_list);
         mRecyclerView.setHasFixedSize(true);
