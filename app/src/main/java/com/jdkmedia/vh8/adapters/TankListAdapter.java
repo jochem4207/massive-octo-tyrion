@@ -58,7 +58,7 @@ public class TankListAdapter extends BaseAdapter {
         if (convertView == null) {
 
             LayoutInflater li = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = li.inflate(R.layout.fragment_tank_list, parent, false);
+            convertView = li.inflate(R.layout.fragment_tank_list_listview, parent, false);
 
             // initialize the view holder
             viewHolder = new ViewHolder();

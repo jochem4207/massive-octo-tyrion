@@ -60,7 +60,8 @@ public class TankSearchMainFragment extends ListFragment implements AbsListView.
     private onTankSelectedListener mListener;
 
     //Result api
-    private List<Tank> tankResult;
+    private ArrayList<Tank> tankList = new ArrayList<Tank>();
+
 
     /*
       * Use this factory method to create a new instance of
@@ -157,10 +158,10 @@ public class TankSearchMainFragment extends ListFragment implements AbsListView.
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
 
-//        if (savedInstanceState != null && JsonResult != null) {
-//            JsonResult = (JsonResultPlayerQuery) savedInstanceState.getSerializable("search_result");
-//            updateFragment(JsonResult);
-//        }
+        if (savedInstanceState != null && tankList != null) {
+            tankList = (ArrayList<Tank>) savedInstanceState.getSerializable("search_result");
+            updateFragment(tankList);
+        }
         return view;
     }
 
@@ -186,10 +187,10 @@ public class TankSearchMainFragment extends ListFragment implements AbsListView.
         mListener = null;
     }
 
-//    @Override
-//    public void onSaveInstanceState(Bundle outState) {
-//        outState.putSerializable("search_result", JsonResult);
-//    }
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable("search_result", tankList);
+    }
 
     @Override
     public void onDestroy() {
@@ -233,7 +234,6 @@ public class TankSearchMainFragment extends ListFragment implements AbsListView.
     }
 
     private class CallAPI extends AsyncTask<String, Void, Boolean> {
-        ArrayList<Tank> tankList = new ArrayList<Tank>();
 
         @Override
         protected Boolean doInBackground(String... params) {
