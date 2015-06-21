@@ -21,7 +21,3 @@
         android:paddingTop="16dp"/>
 </RelativeLayout>
 
-
-    <!--<ListView--><!--android:id="@id/android:list"--><!--android:id="@+id/listView"-->
-
-    <!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--android:layout_gravity="center" />-->
