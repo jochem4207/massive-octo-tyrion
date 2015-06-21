@@ -89,9 +89,11 @@
       <file leaf-file-name="PlayerDetailFragment.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jdkmedia/vh8/fragment/PlayerDetailFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.73770493" vertical-offset="375" max-vertical-offset="1290">
-              <caret line="85" column="17" selection-start-line="85" selection-start-column="17" selection-end-line="85" selection-end-column="17" />
-              <folding />
+            <state vertical-scroll-proportion="0.91803277" vertical-offset="0" max-vertical-offset="1290">
+              <caret line="71" column="51" selection-start-line="71" selection-start-column="51" selection-end-line="71" selection-end-column="51" />
+              <folding>
+                <element signature="e#2383#2401#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -2702,9 +2704,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jdkmedia/vh8/fragment/PlayerDetailFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.73770493" vertical-offset="375" max-vertical-offset="1290">
-          <caret line="85" column="17" selection-start-line="85" selection-start-column="17" selection-end-line="85" selection-end-column="17" />
-          <folding />
+        <state vertical-scroll-proportion="0.91803277" vertical-offset="0" max-vertical-offset="1290">
+          <caret line="71" column="51" selection-start-line="71" selection-start-column="51" selection-end-line="71" selection-end-column="51" />
+          <folding>
+            <element signature="e#2383#2401#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

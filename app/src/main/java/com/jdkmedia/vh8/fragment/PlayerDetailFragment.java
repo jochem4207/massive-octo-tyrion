@@ -26,7 +26,7 @@ public class PlayerDetailFragment extends Fragment {
 
     //The Adapter for cards
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.Adapter<PlayerDetailCardAdapter.ViewHolder> mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private PlayerExtended playerExtended;
 
@@ -64,7 +64,7 @@ public class PlayerDetailFragment extends Fragment {
 
     //Create some demo stuff
     private ArrayList<PlayerDetailCard> getDataSet(PlayerExtended playerExtended) {
-        ArrayList results = new ArrayList<PlayerDetailCard>();
+        ArrayList<PlayerDetailCard> results = new ArrayList<PlayerDetailCard>();
 
         //Achievements
 
