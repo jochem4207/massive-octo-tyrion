@@ -276,7 +276,6 @@ public class TankSearchMainFragment extends ListFragment implements AbsListView.
                         tankList.add(tank);
                     }
 
-                     String snot = "abc";
                 } else if (status.equals("error")) {
                     //api error
                     Log.e(APP + " Class: " + TAG, "API EXCEPTION  in getting player details" + status);

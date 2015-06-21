@@ -49,6 +49,7 @@ public class TankDetailCardAdapter extends RecyclerView.Adapter<TankDetailCardAd
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        //Set the values of the view items
         holder.mainTitle.setText(mDataset.get(position).getMainTitle());
         holder.subTitle.setText(mDataset.get(position).getSubTitle());
         holder.image.setImageResource(mDataset.get(position).getImageLocation());

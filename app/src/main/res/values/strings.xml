@@ -40,13 +40,6 @@
     <string name="PlayerDetailCardContentDescriptionImage">Detail image</string>
     <string name="ListViewPlayerImageContentDescription">Account Image</string>
     <string name="could_not_get_data">Unable to fetch data from server</string>
-    <string name="inbox">inbox</string>
-    <string name="categories">categories</string>
-    <string name="starred">starred</string>
-    <string name="sent_mail">sent mail</string>
-    <string name="drafts">drafts</string>
-    <string name="trash">trash</string>
-    <string name="spam">spam</string>
     <string name="settings">settings</string>
     <string name="player_search">player search</string>
     <string name="login_message_home_screen">Log in to see your statistics!</string>

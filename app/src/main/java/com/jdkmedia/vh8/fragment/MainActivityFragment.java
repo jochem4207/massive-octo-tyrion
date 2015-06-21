@@ -90,6 +90,13 @@ public class MainActivityFragment extends Fragment {
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.child_fragment, playerDetailInnerFragment, playerDetailInnerFragment.getClass().getName()).addToBackStack(playerDetailInnerFragment.getClass().getName()).commit();
+
+
+            //Load tank details
+            TankDetailInnerFragment tankDetailInnerFragment = new TankDetailInnerFragment(null);
+            //Manage fragment
+            fragmentManager.beginTransaction()
+                    .replace(R.id.child_fragment2, tankDetailInnerFragment, tankDetailInnerFragment.getClass().getName()).addToBackStack(tankDetailInnerFragment.getClass().getName()).commit();
         }
     }
 
