@@ -19,6 +19,8 @@ public class TankExtended {
     private boolean premium;
     @SerializedName("short_name_i18n")
     private String name;
+    @SerializedName("name_i18n")
+    private String longName;
     @SerializedName("max_health")
     private int maxHealth;
     @SerializedName("tank_id")
@@ -30,13 +32,14 @@ public class TankExtended {
     @SerializedName("speed_limit")
     private int speedLimit;
 
-    public TankExtended(int enginePower, int weight, int gunDamageMin, String image, boolean premium, String name, int maxHealth, int id, int radioDistance, String type, int speedLimit) {
+    public TankExtended(int enginePower, int weight, int gunDamageMin, String image, boolean premium, String name, String longName, int maxHealth, int id, int radioDistance, String type, int speedLimit) {
         this.enginePower = enginePower;
         this.weight = weight;
         this.gunDamageMin = gunDamageMin;
         this.image = image;
         this.premium = premium;
         this.name = name;
+        this.longName = longName;
         this.maxHealth = maxHealth;
         this.id = id;
         this.radioDistance = radioDistance;
@@ -130,5 +133,13 @@ public class TankExtended {
 
     public void setSpeedLimit(int speedLimit) {
         this.speedLimit = speedLimit;
+    }
+
+    public String getLongName() {
+        return longName;
+    }
+
+    public void setLongName(String longName) {
+        this.longName = longName;
     }
 }
