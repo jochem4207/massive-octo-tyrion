@@ -37,8 +37,12 @@ import java.io.Reader;
 import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NavigableSet;
+import java.util.Set;
+import java.util.TreeSet;
 
 
 public class TankSearchMainFragment extends ListFragment implements AbsListView.OnItemClickListener {
@@ -162,12 +166,14 @@ public class TankSearchMainFragment extends ListFragment implements AbsListView.
             tankList = (ArrayList<Tank>) savedInstanceState.getSerializable("search_result");
             updateFragment(tankList);
         }
+
         return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        getTanks();
     }
 
     @Override
@@ -204,7 +210,6 @@ public class TankSearchMainFragment extends ListFragment implements AbsListView.
         Log.d(APP + " Class: " + TAG, data.toString());
 
 
-
         Log.d(APP + " Class: " + TAG, "Clear adapter and add new data");
         // update data in our adapter
         mAdapter.getData().clear();
@@ -216,12 +221,9 @@ public class TankSearchMainFragment extends ListFragment implements AbsListView.
 
     //SEARCH PLAYERS
 
-    public void getTanks(String query) {
+    public void getTanks() {
         if (getView() != null) {
 
-
-            //Log the input
-            Log.d(APP + " Class: " + TAG, "Search:" + query);
 
             //Call api to get result
             new CallAPI().execute(API_URL + API_CALL + APPLICATION_ID);
@@ -232,6 +234,11 @@ public class TankSearchMainFragment extends ListFragment implements AbsListView.
 
         }
     }
+
+    public void getTanks(String query){
+        //throw notImplementedException();
+    }
+
 
     private class CallAPI extends AsyncTask<String, Void, Boolean> {
 

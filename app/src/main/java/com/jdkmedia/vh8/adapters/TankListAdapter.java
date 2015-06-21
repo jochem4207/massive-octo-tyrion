@@ -13,7 +13,9 @@ import android.widget.TextView;
 import com.jdkmedia.vh8.domain.Player;
 import com.jdkmedia.vh8.R;
 import com.jdkmedia.vh8.domain.Tank;
+import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,7 +29,7 @@ public class TankListAdapter extends BaseAdapter {
     private LayoutInflater mLayoutInflater = null;
 
 
-    public TankListAdapter(Activity context, List<Tank> list) {
+    public TankListAdapter(Activity context, ArrayList<Tank> list) {
         mContext = context;
         mList = list;
         mLayoutInflater = (LayoutInflater) mContext
@@ -74,7 +76,8 @@ public class TankListAdapter extends BaseAdapter {
         Tank item = (Tank) getItem(position);
 
         viewHolder.tvTankName.setText(item.getName());
-        //viewHolder.tvTankImage.setImageDrawable(item.getImage());
+        Picasso.with(mContext).load(item.getContourImage()).into(viewHolder.tvTankImage);
+
         return convertView;
     }
 

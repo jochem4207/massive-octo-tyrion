@@ -14,12 +14,15 @@ public class Tank {
     private String image;
     @SerializedName("name_i18n")
     private String name;
+    @SerializedName("contour_image")
+    private String ContourImage;
 
-    public Tank(int id, int level, String image, String name) {
+    public Tank(int id, int level, String image, String name, String contourImage) {
         this.id = id;
         this.level = level;
         this.image = image;
         this.name = name;
+        ContourImage = contourImage;
     }
 
 
@@ -53,5 +56,13 @@ public class Tank {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getContourImage() {
+        return ContourImage;
+    }
+
+    public void setContourImage(String contourImage) {
+        ContourImage = contourImage;
     }
 }
