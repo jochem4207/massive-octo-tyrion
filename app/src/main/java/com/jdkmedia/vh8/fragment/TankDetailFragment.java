@@ -8,17 +8,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jdkmedia.vh8.R;
 import com.jdkmedia.vh8.adapters.PlayerDetailCardAdapter;
+import com.jdkmedia.vh8.adapters.TankDetailCardAdapter;
 import com.jdkmedia.vh8.domain.PlayerDetailCard;
-import com.jdkmedia.vh8.domain.PlayerExtended;
+import com.jdkmedia.vh8.domain.TankDetailCard;
+import com.jdkmedia.vh8.domain.TankExtended;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class TankDetailFragment extends Fragment {
-
 
     //Logging
     public final String TAG = getClass().getName() + " ";
@@ -26,13 +29,13 @@ public class TankDetailFragment extends Fragment {
 
     //The Adapter for cards
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter<PlayerDetailCardAdapter.ViewHolder> mAdapter;
+    private TankDetailCardAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private PlayerExtended playerExtended;
+    private TankExtended tankExtended;
 
-    public TankDetailFragment(PlayerExtended player) {
-        Log.d(APP + " Class: " + TAG, "Created new instance of player detail fragment with user: " + player.getNickname());
-        this.playerExtended = player;
+    public TankDetailFragment(TankExtended tank) {
+        Log.d(APP + " Class: " + TAG, "Created new instance of tank detail fragment with tank: " + tank.getName());
+        this.tankExtended = tank;
     }
 
     @Override
@@ -45,14 +48,18 @@ public class TankDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         //Get view and set text
-        View view = inflater.inflate(R.layout.fragment_player_detail, container, false);
-        TextView playerName = (TextView) view.findViewById(R.id.playerName);
-        playerName.setText(playerExtended.getNickname() + " (" + playerExtended.getGlobalRating() + ")");
+        View view = inflater.inflate(R.layout.fragment_tank_detail, container, false);
+        TextView tankName = (TextView) view.findViewById(R.id.tankName);
+        ImageView tankCountourImage = (ImageView) view.findViewById(R.id.imageView);
+
+        Picasso.with(getActivity().getApplicationContext()).load(tankExtended.getImage()).into(tankCountourImage);
+
+        tankName.setText(tankExtended.getName());
 
         Log.d(APP + " Class: " + TAG, "Setting the adapter");
 
         //Set the adapters data
-        mAdapter = new PlayerDetailCardAdapter(getDataSet(playerExtended)); //<-- get the data from getDataSet
+        mAdapter = new TankDetailCardAdapter(getDataSet(tankExtended)); //<-- get the data from getDataSet
         mRecyclerView = (RecyclerView) view.findViewById(R.id.tank_list);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
@@ -65,23 +72,17 @@ public class TankDetailFragment extends Fragment {
 
 
     //Create some demo stuff
-    private ArrayList<PlayerDetailCard> getDataSet(PlayerExtended playerExtended) {
+    private ArrayList<TankDetailCard> getDataSet(TankExtended tankExtended) {
         Log.d(APP + " Class: " + TAG, "Creating new arrayList with player details");
 
-        ArrayList<PlayerDetailCard> results = new ArrayList<PlayerDetailCard>();
+        ArrayList<TankDetailCard> results = new ArrayList<TankDetailCard>();
 
         //Tank count
-        PlayerDetailCard tankCountCard = new PlayerDetailCard(getString(R.string.textTankCount), Integer.toString(playerExtended.getTankCount()), R.mipmap.ic_tank_count);
-        PlayerDetailCard mastersOfExcellenceOneCard = new PlayerDetailCard(getString(R.string.textMarksOfExcellenceMastery), Integer.toString(playerExtended.getMarksOfExcellenceCount(1)), R.mipmap.ic_mastery);
-        PlayerDetailCard mastersOfExcellenceTwoCard = new PlayerDetailCard(getString(R.string.textMarksOfExcellenceOne), Integer.toString(playerExtended.getMarksOfExcellenceCount(2)), R.mipmap.ic_mastery_1);
-        PlayerDetailCard mastersOfExcellenceThreeCard = new PlayerDetailCard(getString(R.string.textMarksOfExcellenceTwo), Integer.toString(playerExtended.getMarksOfExcellenceCount(3)), R.mipmap.ic_mastery_2);
-        PlayerDetailCard mastersOfExcellenceFourCard = new PlayerDetailCard(getString(R.string.textMarksOfExcellenceThree), Integer.toString(playerExtended.getMarksOfExcellenceCount(4)), R.mipmap.ic_mastery_3);
+        TankDetailCard tankCountCard = new TankDetailCard(getString(R.string.textTankCount), Integer.toString(tankExtended.getEnginePower()), R.mipmap.ic_tank_count);
+        TankDetailCard mastersOfExcellenceOneCard = new TankDetailCard(getString(R.string.textMarksOfExcellenceMastery), Integer.toString(tankExtended.getGunDamageMin()), R.mipmap.ic_mastery);
 
         results.add(tankCountCard);
         results.add(mastersOfExcellenceOneCard);
-        results.add(mastersOfExcellenceTwoCard);
-        results.add(mastersOfExcellenceThreeCard);
-        results.add(mastersOfExcellenceFourCard);
 
         return results;
     }
@@ -89,7 +90,7 @@ public class TankDetailFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ((PlayerDetailCardAdapter) mAdapter).setOnItemClickListener(new PlayerDetailCardAdapter.TankItemClickListener() {
+        ((TankDetailCardAdapter) mAdapter).setOnItemClickListener(new TankDetailCardAdapter.TankItemClickListener() {
             @Override
             public void onItemClick(int position, View v) {
                 Log.d(APP + " Class: " + TAG, "Clicked on item" + position);

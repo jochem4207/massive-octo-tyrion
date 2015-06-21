@@ -24,11 +24,13 @@ import com.jdkmedia.vh8.domain.Player;
 import com.jdkmedia.vh8.domain.PlayerExtended;
 import com.jdkmedia.vh8.domain.PlayerTank;
 import com.jdkmedia.vh8.domain.Tank;
+import com.jdkmedia.vh8.domain.TankExtended;
 import com.jdkmedia.vh8.fragment.MainActivityFragment;
 import com.jdkmedia.vh8.fragment.NavigationDrawerFragment;
 import com.jdkmedia.vh8.fragment.PlayerDetailFragment;
 import com.jdkmedia.vh8.fragment.PlayerDetailInnerFragment;
 import com.jdkmedia.vh8.fragment.PlayerSearchMainFragment;
+import com.jdkmedia.vh8.fragment.TankDetailFragment;
 import com.jdkmedia.vh8.fragment.TankSearchMainFragment;
 
 import java.io.IOException;
@@ -78,7 +80,7 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
             //Get properties from bundle
             accessToken = b.getString("accessToken");
             String nickName = b.getString("nickName");
-            int accountId = b.getInt("accountId");
+            int accountId = b.getInt("id");
 
             //Set logged in flag (for menu and checks)
             isLoggedIn = true;
@@ -251,17 +253,17 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
      * Class to give multiple params to the asynctask
      * url: The url to get the json from
      * innerfragment: home screen or detail screen (true or false)
-     * accountId: the account id from the player to get details from
+     * id: the account id from the player to get details from or tank
      */
     private static class MyTaskParams {
         String url;
         boolean innerFragment;
-        int accountId;
+        int id;
 
-        MyTaskParams(String url, boolean innerFragment, int accountId) {
+        MyTaskParams(String url, boolean innerFragment, int id) {
             this.url = url;
-            this.accountId = accountId;
             this.innerFragment = innerFragment;
+            this.id = id;
         }
     }
 
@@ -321,7 +323,7 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
             try{
 
                 //Get players tanks info
-                URL url = new URL("https://api.worldoftanks.eu/wot/account/tanks/?application_id=74da03a344137eb2756c49c9e9069092&account_id=" + params[0].accountId);
+                URL url = new URL("https://api.worldoftanks.eu/wot/account/tanks/?application_id=74da03a344137eb2756c49c9e9069092&account_id=" + params[0].id);
                 //open stream
                 InputStream input = url.openStream();
                 //Open reader
@@ -421,6 +423,74 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
 
     @Override
     public void onTankSelectedListener(Tank tank) {
-
+        new CallAPITankDetail().execute("https://api.worldoftanks.eu/wot/encyclopedia/tankinfo/?application_id=demo&tank_id=" + tank.getId());
     }
+
+
+    public class CallAPITankDetail extends AsyncTask<String, Void, Boolean> {
+        private TankExtended tankExtended;
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            //Get properties from params
+            String urlString = params[0];
+
+            Log.d(APP + " Class: " + TAG, "Async task: Get player details: Url:" + urlString);
+
+            // Get output from api
+            try {
+                //Create url
+                URL url = new URL(urlString);
+                //open stream
+                InputStream input = url.openStream();
+                //Open reader
+                Reader reader = new InputStreamReader(input);
+
+                //Parse the result
+                JsonElement root = new JsonParser().parse(reader);
+                //Get the status
+                String status = root.getAsJsonObject().get("status").getAsString();
+                //if status is ok
+                if (status.equals("ok")) {
+                    //Get JsonObject data
+                    JsonObject obj = root.getAsJsonObject().get("data").getAsJsonObject();
+
+                    //For every entry set create a playerExtended
+                    for (Map.Entry<String, JsonElement> entry : obj.entrySet()) {
+
+                        //Can be multiple players (api allows, app does not!)
+                        tankExtended = new Gson().fromJson(entry.getValue(), TankExtended.class);
+
+                        Log.d(APP + " Class: " + TAG, tankExtended.getName());
+                    }
+
+                } else if (status.equals("error")) {
+                    //api error
+                    Log.e(APP + " Class: " + TAG, "API EXCEPTION  in getting player details" + status);
+                }
+
+            }catch (IOException e) {
+                Log.e(APP + " Class: " + TAG, "IOException in getting player details :" + e);
+                return false;
+            }
+
+            return true;
+        }
+
+        protected void onPostExecute(Boolean result) {
+            Log.d(APP + " Class: " + TAG, "Result onpost execute:" + result);
+            if (result) {
+
+                FragmentManager fragmentManager = getFragmentManager();
+
+                TankDetailFragment tankDetailFragment = new TankDetailFragment(tankExtended);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, tankDetailFragment, tankDetailFragment.getClass().getName()).addToBackStack(tankDetailFragment.getClass().getName()).commit();
+
+                Log.d(APP + " Class: " + TAG, "Transaction committed");
+            }
+        }
+    }
+
 }

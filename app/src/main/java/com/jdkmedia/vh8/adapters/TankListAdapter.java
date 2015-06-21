@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.jdkmedia.vh8.domain.Player;
 import com.jdkmedia.vh8.R;
 import com.jdkmedia.vh8.domain.Tank;
 import com.squareup.picasso.Picasso;
