@@ -3,12 +3,12 @@
     <item
         android:id="@+id/action_login"
         android:title="@string/action_login"
-        app:showAsAction="never"
+        app:showAsAction="ifRoom"
         />
 
     <item
         android:id="@+id/action_settings"
         android:title="@string/action_settings"
         android:orderInCategory="100"
-        app:showAsAction="never" />
+        app:showAsAction="ifRoom" />
 </menu>

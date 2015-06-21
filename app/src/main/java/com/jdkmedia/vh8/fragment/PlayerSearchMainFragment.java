@@ -123,8 +123,6 @@ public class PlayerSearchMainFragment extends ListFragment implements AbsListVie
                         getPlayers(query);
                         return false;
                     }
-
-                    Toast.makeText(getActivity(), getString(R.string.error_fill_field), Toast.LENGTH_LONG).show();
                     return true;
                 }
             });
