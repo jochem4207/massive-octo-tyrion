@@ -101,11 +101,11 @@ public class PlayerSearchMainFragment extends ListFragment implements AbsListVie
                 @Override
                 public boolean onQueryTextSubmit(String query) {
 
-                    Log.d(APP + " Class: " + TAG, "User submitted query"  + query);
+                    Log.d(APP + " Class: " + TAG, "User submitted query" + query);
 
                     //Query has to be atleast 4 chars for api requirements
                     if (query.length() > 3) {
-                        Log.d(APP + " Class: " + TAG, "query is valid"  + query);
+                        Log.d(APP + " Class: " + TAG, "query is valid" + query);
                         getPlayers(query);
                         return false;
                     }
@@ -119,7 +119,7 @@ public class PlayerSearchMainFragment extends ListFragment implements AbsListVie
 
                     //Query has to be atleast 4 chars for api requirements
                     if (query.length() > 3) {
-                        Log.d(APP + " Class: " + TAG, "query is valid"  + query);
+                        Log.d(APP + " Class: " + TAG, "query is valid" + query);
                         getPlayers(query);
                         return false;
                     }

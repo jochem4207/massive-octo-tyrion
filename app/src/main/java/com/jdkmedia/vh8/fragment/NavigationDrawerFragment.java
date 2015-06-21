@@ -2,16 +2,16 @@ package com.jdkmedia.vh8.fragment;
 
 //USED http://blog.sqisland.com/2014/06/navigationdrawer-creates-fragment-twice.html for bugs in nav drawer and other fragments
 
-import android.app.Activity;
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Fragment;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import com.jdkmedia.vh8.R;
 
 /**
@@ -29,7 +30,7 @@ import com.jdkmedia.vh8.R;
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
-public class NavigationDrawerFragment extends Fragment /*implements FragmentManager.OnBackStackChangedListener*/{
+public class NavigationDrawerFragment extends Fragment /*implements FragmentManager.OnBackStackChangedListener*/ {
 
     /**
      * Remember the position of the selected item.
@@ -112,8 +113,8 @@ public class NavigationDrawerFragment extends Fragment /*implements FragmentMana
         return mDrawerListView;
     }
 
-    public void updateMenu(){
-        ArrayAdapter<String> adapt =  (ArrayAdapter)mDrawerListView.getAdapter();
+    public void updateMenu() {
+        ArrayAdapter<String> adapt = (ArrayAdapter) mDrawerListView.getAdapter();
         adapt.notifyDataSetChanged();
     }
 
@@ -287,6 +288,6 @@ public class NavigationDrawerFragment extends Fragment /*implements FragmentMana
         /**
          * Called when an item in the navigation drawer is selected.
          */
-        void onNavigationDrawerItemSelected(int position,  boolean fromSavedInstanceState);
+        void onNavigationDrawerItemSelected(int position, boolean fromSavedInstanceState);
     }
 }

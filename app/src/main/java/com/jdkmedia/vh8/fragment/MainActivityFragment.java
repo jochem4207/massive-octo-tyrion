@@ -1,10 +1,10 @@
 package com.jdkmedia.vh8.fragment;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,9 +37,9 @@ public class MainActivityFragment extends Fragment {
         fragment.setArguments(args);
 
         //Logging
-        if(playerExtended != null) {
+        if (playerExtended != null) {
             Log.d(APP + " Class: ", "New instance created with player" + playerExtended.toString());
-        }else{
+        } else {
             Log.d(APP + " Class: ", "New instance created without player");
         }
         return fragment;
@@ -58,9 +58,9 @@ public class MainActivityFragment extends Fragment {
 
 
             //Logging
-            if(loggedInPlayer != null){
+            if (loggedInPlayer != null) {
                 Log.d(APP + " Class: ", "On create retrevied loggedInPlayer" + loggedInPlayer);
-            }else{
+            } else {
                 Log.d(APP + " Class: ", "On create  retrevied no player");
             }
         }
@@ -76,11 +76,11 @@ public class MainActivityFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        if(loggedInPlayer != null){
+        if (loggedInPlayer != null) {
             //Load the detailed user info for the fragment on the home screen
             Log.d(APP + " Class: ", "Player is logged in loading detail inner fragment");
             mListener.onLoadDetailFragment(loggedInPlayer);
-        }else{
+        } else {
             //Don't load anything, use rnot logged in
             Log.d(APP + " Class: ", "Player is not logged in loading detail inner fragment empty!");
 
@@ -146,6 +146,7 @@ public class MainActivityFragment extends Fragment {
     public interface OnLoadDetailFragment {
         /**
          * If the player is logged in, send it to the main activity to get extended details
+         *
          * @param playerExtended the logged in player
          */
         public void onLoadDetailFragment(PlayerExtended playerExtended);

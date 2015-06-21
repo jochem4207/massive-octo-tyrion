@@ -1,8 +1,7 @@
 package com.jdkmedia.vh8.fragment;
 
-import android.os.Bundle;
 import android.app.Fragment;
-import android.support.v7.widget.RecyclerView;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +26,7 @@ public class PlayerDetailInnerFragment extends Fragment {
 
     /**
      * Constructor for the fragment
+     *
      * @param loggedInPlayer the player that is logged in or null
      */
     public PlayerDetailInnerFragment(PlayerExtended loggedInPlayer) {
@@ -43,7 +43,7 @@ public class PlayerDetailInnerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //Get the args
         View view;
-        if(player == null) {
+        if (player == null) {
             Log.d(APP + " Class: " + TAG, "Player is not logged in, load error view");
 
             //Load error view
@@ -53,7 +53,7 @@ public class PlayerDetailInnerFragment extends Fragment {
             TextView playerDetailNotLoggedInTextView = (TextView) view.findViewById(R.id.playerDetailNotLoggedIn);
             playerDetailNotLoggedInTextView.setText(R.string.login_message_home_screen);
 
-        }else{
+        } else {
             Log.d(APP + " Class: " + TAG, "Player is logged in, load details view");
 
             view = inflater.inflate(R.layout.fragment_player_detail_inner, container, false);

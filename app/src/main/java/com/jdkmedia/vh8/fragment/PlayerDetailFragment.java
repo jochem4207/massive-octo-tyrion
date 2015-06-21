@@ -1,7 +1,7 @@
 package com.jdkmedia.vh8.fragment;
 
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -71,11 +71,11 @@ public class PlayerDetailFragment extends Fragment {
         ArrayList<PlayerDetailCard> results = new ArrayList<PlayerDetailCard>();
 
         //Tank count
-        PlayerDetailCard tankCountCard = new PlayerDetailCard(getString(R.string.textTankCount), Integer.toString(playerExtended.getTankCount()) ,R.mipmap.ic_tank_count);
-        PlayerDetailCard mastersOfExcellenceOneCard = new PlayerDetailCard(getString(R.string.textMarksOfExcellenceMastery), Integer.toString(playerExtended.getMarksOfExcellenceCount(1)),R.mipmap.ic_mastery);
-        PlayerDetailCard mastersOfExcellenceTwoCard = new PlayerDetailCard(getString(R.string.textMarksOfExcellenceOne), Integer.toString(playerExtended.getMarksOfExcellenceCount(2)),R.mipmap.ic_mastery_1);
-        PlayerDetailCard mastersOfExcellenceThreeCard = new PlayerDetailCard(getString(R.string.textMarksOfExcellenceTwo), Integer.toString(playerExtended.getMarksOfExcellenceCount(3)),R.mipmap.ic_mastery_2);
-        PlayerDetailCard mastersOfExcellenceFourCard = new PlayerDetailCard(getString(R.string.textMarksOfExcellenceThree), Integer.toString(playerExtended.getMarksOfExcellenceCount(4)),R.mipmap.ic_mastery_3);
+        PlayerDetailCard tankCountCard = new PlayerDetailCard(getString(R.string.textTankCount), Integer.toString(playerExtended.getTankCount()), R.mipmap.ic_tank_count);
+        PlayerDetailCard mastersOfExcellenceOneCard = new PlayerDetailCard(getString(R.string.textMarksOfExcellenceMastery), Integer.toString(playerExtended.getMarksOfExcellenceCount(1)), R.mipmap.ic_mastery);
+        PlayerDetailCard mastersOfExcellenceTwoCard = new PlayerDetailCard(getString(R.string.textMarksOfExcellenceOne), Integer.toString(playerExtended.getMarksOfExcellenceCount(2)), R.mipmap.ic_mastery_1);
+        PlayerDetailCard mastersOfExcellenceThreeCard = new PlayerDetailCard(getString(R.string.textMarksOfExcellenceTwo), Integer.toString(playerExtended.getMarksOfExcellenceCount(3)), R.mipmap.ic_mastery_2);
+        PlayerDetailCard mastersOfExcellenceFourCard = new PlayerDetailCard(getString(R.string.textMarksOfExcellenceThree), Integer.toString(playerExtended.getMarksOfExcellenceCount(4)), R.mipmap.ic_mastery_3);
 
         results.add(tankCountCard);
         results.add(mastersOfExcellenceOneCard);
