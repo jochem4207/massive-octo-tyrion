@@ -94,7 +94,7 @@ public class PlayerDetailFragment extends Fragment {
         ((PlayerDetailCardAdapter) mAdapter).setOnItemClickListener(new PlayerDetailCardAdapter.TankItemClickListener() {
             @Override
             public void onItemClick(int position, View v) {
-                Log.i(TAG, " Clicked on Item " + position);
+                Log.d(TAG, " Clicked on Item " + position);
             }
         });
     }

@@ -82,19 +82,30 @@ public class PlayerSearchMainFragment extends ListFragment implements AbsListVie
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        super.onCreateOptionsMenu(menu, inflater);
+        //Inflate the specific menu
         inflater.inflate(R.menu.search_menu, menu);
+
+        //Get the search item
         MenuItem item = menu.findItem(R.id.search_menu);
-        if (getActivity() != null) {
+
+        //Bind the search
+        if (getActivity().getActionBar() != null) {
+
             SearchView sv = new SearchView((getActivity()).getActionBar().getThemedContext());
+
             MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
             MenuItemCompat.setActionView(item, sv);
+
+            //Set a listener
             sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                    System.out.println("search query submit");
 
+                    Log.d(APP + " Class: " + TAG, "User submitted query"  + query);
+
+                    //Query has to be atleast 4 chars for api requirements
                     if (query.length() > 3) {
+                        Log.d(APP + " Class: " + TAG, "query is valid"  + query);
                         getPlayers(query);
                         return false;
                     }
@@ -104,23 +115,34 @@ public class PlayerSearchMainFragment extends ListFragment implements AbsListVie
                 }
 
                 @Override
-                public boolean onQueryTextChange(String newText) {
-                    return false;
+                public boolean onQueryTextChange(String query) {
+
+                    //Query has to be atleast 4 chars for api requirements
+                    if (query.length() > 3) {
+                        Log.d(APP + " Class: " + TAG, "query is valid"  + query);
+                        getPlayers(query);
+                        return false;
+                    }
+
+                    Toast.makeText(getActivity(), getString(R.string.error_fill_field), Toast.LENGTH_LONG).show();
+                    return true;
                 }
             });
         }
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.i(APP + " Class: " + TAG, "Loading fragment player");
+        Log.d(APP + " Class: " + TAG, "Load fragment player search view");
         //Inflate fragment layout
         View view = inflater.inflate(R.layout.fragment_player_search_view, container, false);
 
         //Get the listview
         mListView = (ListView) view.findViewById(android.R.id.list);
 
-        Log.i(APP + " Class: " + TAG, "Setting adapter");
+        Log.d(APP + " Class: " + TAG, "Set adapter");
+
         //Initate adapter
         mAdapter = new PlayerListAdapter(getActivity(), new ArrayList<Player>());
 
@@ -130,10 +152,9 @@ public class PlayerSearchMainFragment extends ListFragment implements AbsListVie
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
 
-        Log.i(APP + " Class: " + TAG, "Returning view 1");
-
         if (savedInstanceState != null && JsonResult != null) {
             JsonResult = (JsonResultPlayerQuery) savedInstanceState.getSerializable("search_result");
+            updateFragment(JsonResult);
         }
         return view;
     }
@@ -168,19 +189,18 @@ public class PlayerSearchMainFragment extends ListFragment implements AbsListVie
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.e(APP + " Class: " + TAG, "FRAGMENT DEAD");
     }
 
 
     //To update the fragment with data
     private void updateFragment(JsonResultPlayerQuery data) {
-        Log.i(APP + " Class: " + TAG, "Get new data");
-        Log.i(APP + " Class: " + TAG, data.toString());
+        Log.d(APP + " Class: " + TAG, "Get new data");
+        Log.d(APP + " Class: " + TAG, data.toString());
 
         // get new modified  data
         List<Player> objects = data.getPlayers();
 
-        Log.i(APP + " Class: " + TAG, "Clear adapter and add new data");
+        Log.d(APP + " Class: " + TAG, "Clear adapter and add new data");
         // update data in our adapter
         mAdapter.getData().clear();
         mAdapter.getData().addAll(objects);
@@ -196,7 +216,7 @@ public class PlayerSearchMainFragment extends ListFragment implements AbsListVie
 
 
             //Log the input
-            Log.i(APP + " Class: " + TAG, "Search:" + query);
+            Log.d(APP + " Class: " + TAG, "Search:" + query);
 
             //Call api to get result
             new CallAPI().execute(API_URL + API_CALL + APPLICATION_ID + API_OPTION + query);
@@ -211,7 +231,7 @@ public class PlayerSearchMainFragment extends ListFragment implements AbsListVie
     private class CallAPI extends AsyncTask<String, Void, Boolean> {
         @Override
         protected Boolean doInBackground(String... params) {
-            Log.i(APP + " Class: " + TAG, "JsonAsyncTask URL:" + params[0]);
+            Log.d(APP + " Class: " + TAG, "JsonAsyncTask URL:" + params[0]);
 
             //Get url from params
             String urlString = params[0];
@@ -224,12 +244,12 @@ public class PlayerSearchMainFragment extends ListFragment implements AbsListVie
                 InputStream input = url.openStream();
                 //Open reader
                 Reader reader = new InputStreamReader(input);
-                //Json to class
+                //Json to class use GSON
                 JsonResultPlayerQuery result = new Gson().fromJson(reader, JsonResultPlayerQuery.class);
                 if (result != null) {
                     JsonResult = result;
                 } else {
-                    Log.i(APP + " Class: " + TAG, "Unhandled Error in Call API");
+                    Log.d(APP + " Class: " + TAG, "Unhandled Error in Call API");
                 }
 
             } catch (IOException e) {
@@ -241,14 +261,14 @@ public class PlayerSearchMainFragment extends ListFragment implements AbsListVie
         }
 
         protected void onPostExecute(Boolean result) {
-            Log.e(APP + " Class: " + TAG, "OnPostExecute result" + result);
+            Log.d(APP + " Class: " + TAG, "OnPostExecute result" + result);
             if (!result) {
                 Toast.makeText(getActivity(), getString(R.string.could_not_get_data), Toast.LENGTH_LONG).show();
             } else {
 
                 updateFragment(JsonResult);
 
-                Log.e(APP + " Class: " + TAG, "OnPostExecute result player" + JsonResult.toString());
+                Log.d(APP + " Class: " + TAG, "OnPostExecute result player" + JsonResult.toString());
             }
         }
     }
@@ -260,7 +280,7 @@ public class PlayerSearchMainFragment extends ListFragment implements AbsListVie
         //get player from postion
         //give it to the main activity
         mListener.onPlayerSelected((Player) mAdapter.getItem(position));
-        Log.i(APP + " Class: " + TAG, "PlayerListFragment Position clicked" + Integer.toString(position));
+        Log.d(APP + " Class: " + TAG, "PlayerListFragment Position clicked" + Integer.toString(position));
     }
 
 
@@ -285,4 +305,3 @@ public class PlayerSearchMainFragment extends ListFragment implements AbsListVie
     }
 }
 
-//ondestroy -> save your data

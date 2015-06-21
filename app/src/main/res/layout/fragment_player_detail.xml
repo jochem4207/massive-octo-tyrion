@@ -11,6 +11,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:src="@drawable/ic_account_box_black_24dp"
         android:maxWidth="16dp"
         android:minHeight="16dp"
@@ -26,7 +27,7 @@
         android:layout_marginStart="72dp"
         android:layout_marginEnd="16dp"
         android:orientation="vertical"
-        android:paddingBottom="20dp"
+        android:paddingBottom="16dp"
         android:paddingTop="16dp">
 
 

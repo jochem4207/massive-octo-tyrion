@@ -61,4 +61,5 @@
     <string name="tankButton">goToTankList</string>
     <string name="homeScreenPlayerButton">goToPlayerSearch</string>
     <string name="contentDescriptionFragmentPlayerDetail">Player Icon</string>
+    <string name="fragmentPlayerSearchEmptyList">Use the search function above</string>
 </resources>
