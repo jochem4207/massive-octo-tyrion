@@ -19,9 +19,10 @@ import java.util.ArrayList;
 
 public class PlayerDetailFragment extends Fragment {
 
-    //Debugging
+
+    //Logging
     public final String TAG = getClass().getName() + " ";
-    public static final String APP = "JdkMedia ";
+    public static final String APP = "World of tanks ";
 
     //The Adapter for cards
     private RecyclerView mRecyclerView;
@@ -42,17 +43,14 @@ public class PlayerDetailFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //Get the args
-
         //Get view and set text
         View view = inflater.inflate(R.layout.fragment_player_detail, container, false);
         TextView playerName = (TextView) view.findViewById(R.id.playerName);
         playerName.setText(playerExtended.getNickname() + " (" + playerExtended.getGlobalRating() + ")");
 
-        //Create data for cards here
 
-//        //Load adapter
-        mAdapter = new PlayerDetailCardAdapter(getDataSet(playerExtended));
+        //Set the adapters data
+        mAdapter = new PlayerDetailCardAdapter(getDataSet(playerExtended)); //<-- get the data from getDataSet
         mRecyclerView = (RecyclerView) view.findViewById(R.id.tank_list);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
@@ -94,15 +92,8 @@ public class PlayerDetailFragment extends Fragment {
         ((PlayerDetailCardAdapter) mAdapter).setOnItemClickListener(new PlayerDetailCardAdapter.TankItemClickListener() {
             @Override
             public void onItemClick(int position, View v) {
-                Log.d(TAG, " Clicked on Item " + position);
+                Log.d(APP + " Class: " + TAG, "Clicked on item" + position);
             }
         });
     }
-
-    //UPDATE FRAG //
-    public void updatePlayerView(PlayerExtended player){
-
-    }
-
-
 }

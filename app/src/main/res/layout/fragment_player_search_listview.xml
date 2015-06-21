@@ -15,7 +15,7 @@
         android:src="@drawable/ic_account_box_black_24dp"
         android:maxWidth="16dp"
         android:minHeight="16dp"
-        android:contentDescription="Player Icon"
+        android:contentDescription="@string/fragmentPlayerSearchListViewPlayerIcon"
         />
 
     <LinearLayout
@@ -35,9 +35,10 @@
             android:id="@+id/firstLine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="preview"
         />
     </LinearLayout>
 
 
 </RelativeLayout>
+
+
