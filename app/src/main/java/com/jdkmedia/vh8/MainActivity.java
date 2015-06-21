@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -24,12 +23,13 @@ import com.jdkmedia.vh8.auth.LoginActivity;
 import com.jdkmedia.vh8.domain.Player;
 import com.jdkmedia.vh8.domain.PlayerExtended;
 import com.jdkmedia.vh8.domain.PlayerTank;
+import com.jdkmedia.vh8.domain.Tank;
 import com.jdkmedia.vh8.fragment.MainActivityFragment;
 import com.jdkmedia.vh8.fragment.NavigationDrawerFragment;
 import com.jdkmedia.vh8.fragment.PlayerDetailFragment;
 import com.jdkmedia.vh8.fragment.PlayerDetailInnerFragment;
 import com.jdkmedia.vh8.fragment.PlayerSearchMainFragment;
-import com.jdkmedia.vh8.fragment.TankListFragment;
+import com.jdkmedia.vh8.fragment.TankSearchMainFragment;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,7 +41,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class MainActivity extends Activity implements MainActivityFragment.OnLoadDetailFragment, NavigationDrawerFragment.NavigationDrawerCallbacks, PlayerSearchMainFragment.OnPlayerSelectedListener {
+public class MainActivity extends Activity implements MainActivityFragment.OnLoadDetailFragment, NavigationDrawerFragment.NavigationDrawerCallbacks, PlayerSearchMainFragment.OnPlayerSelectedListener, TankSearchMainFragment.onTankSelectedListener {
     //Logging
     public final String TAG = getClass().getName() + " ";
     public static final String APP = "World of tanks ";
@@ -133,7 +133,7 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
                     Log.d(APP + " Class: " + TAG, "Player search  fragment selected");
                     break;
                 case 2:
-                    fragment = new TankListFragment();
+                    fragment = new TankSearchMainFragment();
                     Log.d(APP + " Class: " + TAG, "Tank list fragment selected");
                     break;
                 default:
@@ -404,8 +404,8 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
      */
     public void loadTanks(View view) {
         Log.d(APP + " Class: " + TAG, "Clicked on the load Tanks button");
-        TankListFragment tankListFragment = new TankListFragment();
-        replaceFragment(tankListFragment);
+        TankSearchMainFragment tankSearchMainFragment = new TankSearchMainFragment();
+        replaceFragment(tankSearchMainFragment);
     }
 
 
@@ -416,5 +416,11 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.container, fragment, fragment.getClass().getName()).addToBackStack(fragment.getClass().getName()).commit();
+    }
+
+
+    @Override
+    public void onTankSelectedListener(Tank tank) {
+
     }
 }

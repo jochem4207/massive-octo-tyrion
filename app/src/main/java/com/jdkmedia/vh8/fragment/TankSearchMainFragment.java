@@ -1,7 +1,6 @@
 package com.jdkmedia.vh8.fragment;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.ListFragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,11 +19,14 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.jdkmedia.vh8.R;
 import com.jdkmedia.vh8.adapters.PlayerListAdapter;
+import com.jdkmedia.vh8.adapters.TankListAdapter;
 import com.jdkmedia.vh8.api.JsonResultPlayerQuery;
 import com.jdkmedia.vh8.domain.Player;
-import com.jdkmedia.vh8.domain.PlayerDetailCard;
 import com.jdkmedia.vh8.domain.PlayerExtended;
 import com.jdkmedia.vh8.domain.Tank;
 
@@ -32,16 +34,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-public class TankListFragment extends ListFragment implements AbsListView.OnItemClickListener {
+
+public class TankSearchMainFragment extends ListFragment implements AbsListView.OnItemClickListener {
+
     //API
     private static final String APPLICATION_ID = "?application_id=74da03a344137eb2756c49c9e9069092";
     private static final String API_URL = "http://api.worldoftanks.eu/wot/";
-    private static final String API_CALL = "account/list/";
-    private static final String API_OPTION = "&search=";
+    private static final String API_CALL = "encyclopedia/tanks/";
 
     //Logging
     public final String TAG = getClass().getName() + " ";
@@ -51,11 +56,11 @@ public class TankListFragment extends ListFragment implements AbsListView.OnItem
      * The fragment's ListView/GridView.
      */
     private ListView mListView;
-    private PlayerListAdapter mAdapter;
-    private OnPlayerSelectedListener mListener;
+    private TankListAdapter mAdapter;
+    private onTankSelectedListener mListener;
 
     //Result api
-    private JsonResultPlayerQuery JsonResult;
+    private List<Tank> tankResult;
 
     /*
       * Use this factory method to create a new instance of
@@ -63,11 +68,11 @@ public class TankListFragment extends ListFragment implements AbsListView.OnItem
 
       * @return A new instance of fragment PlayerSearchMainFragment.
       */
-    public static TankListFragment newInstance() {
-        return new TankListFragment();
+    public static TankSearchMainFragment newInstance() {
+        return new TankSearchMainFragment();
     }
 
-    public TankListFragment() {
+    public TankSearchMainFragment() {
         // Required empty public constructor
     }
 
@@ -136,7 +141,7 @@ public class TankListFragment extends ListFragment implements AbsListView.OnItem
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d(APP + " Class: " + TAG, "Load fragment player search view");
         //Inflate fragment layout
-        View view = inflater.inflate(R.layout.fragment_player_search_view, container, false);
+        View view = inflater.inflate(R.layout.fragment_tank_list, container, false);
 
         //Get the listview
         mListView = (ListView) view.findViewById(android.R.id.list);
@@ -144,7 +149,7 @@ public class TankListFragment extends ListFragment implements AbsListView.OnItem
         Log.d(APP + " Class: " + TAG, "Set adapter");
 
         //Initate adapter
-        mAdapter = new PlayerListAdapter(getActivity(), new ArrayList<Player>());
+        mAdapter = new TankListAdapter(getActivity(), new ArrayList<Tank>());
 
         //Set adapter
         mListView.setAdapter(mAdapter);
@@ -152,10 +157,10 @@ public class TankListFragment extends ListFragment implements AbsListView.OnItem
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
 
-        if (savedInstanceState != null && JsonResult != null) {
-            JsonResult = (JsonResultPlayerQuery) savedInstanceState.getSerializable("search_result");
-            updateFragment(JsonResult);
-        }
+//        if (savedInstanceState != null && JsonResult != null) {
+//            JsonResult = (JsonResultPlayerQuery) savedInstanceState.getSerializable("search_result");
+//            updateFragment(JsonResult);
+//        }
         return view;
     }
 
@@ -168,7 +173,7 @@ public class TankListFragment extends ListFragment implements AbsListView.OnItem
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnPlayerSelectedListener) activity;
+            mListener = (onTankSelectedListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -181,10 +186,10 @@ public class TankListFragment extends ListFragment implements AbsListView.OnItem
         mListener = null;
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable("search_result", JsonResult);
-    }
+//    @Override
+//    public void onSaveInstanceState(Bundle outState) {
+//        outState.putSerializable("search_result", JsonResult);
+//    }
 
     @Override
     public void onDestroy() {
@@ -193,23 +198,99 @@ public class TankListFragment extends ListFragment implements AbsListView.OnItem
 
 
     //To update the fragment with data
-    private void updateFragment(JsonResultPlayerQuery data) {
+    private void updateFragment(ArrayList<Tank> data) {
         Log.d(APP + " Class: " + TAG, "Get new data");
         Log.d(APP + " Class: " + TAG, data.toString());
 
-        // get new modified  data
-        List<Player> objects = data.getPlayers();
+
 
         Log.d(APP + " Class: " + TAG, "Clear adapter and add new data");
         // update data in our adapter
         mAdapter.getData().clear();
-        mAdapter.getData().addAll(objects);
+        mAdapter.getData().addAll(data);
         // Notify adapter that it is changed
         mAdapter.notifyDataSetChanged();
     }
 
-    public void getTanks(String query) {
 
+    //SEARCH PLAYERS
+
+    public void getTanks(String query) {
+        if (getView() != null) {
+
+
+            //Log the input
+            Log.d(APP + " Class: " + TAG, "Search:" + query);
+
+            //Call api to get result
+            new CallAPI().execute(API_URL + API_CALL + APPLICATION_ID);
+
+        } else {
+            //Give a toast error
+            Toast.makeText(getActivity(), getString(R.string.error_fill_field), Toast.LENGTH_LONG).show();
+
+        }
+    }
+
+    private class CallAPI extends AsyncTask<String, Void, Boolean> {
+        ArrayList<Tank> tankList = new ArrayList<Tank>();
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            Log.d(APP + " Class: " + TAG, "JsonAsyncTask URL:" + params[0]);
+
+            //Get url from params
+            String urlString = params[0];
+
+            // Get output from api
+            try {
+                //Create url
+                URL url = new URL(urlString);
+                //open stream
+                InputStream input = url.openStream();
+                //Open reader
+                Reader reader = new InputStreamReader(input);
+                //Json to class use GSON
+                JsonElement root = new JsonParser().parse(reader);
+
+                String status = root.getAsJsonObject().get("status").getAsString();
+
+                //if status is ok
+                if (status.equals("ok")) {
+                    //Get JsonObject data
+                    JsonObject obj = root.getAsJsonObject().get("data").getAsJsonObject();
+
+
+                    //For every entry set create a playerExtended
+                    for (Map.Entry<String, JsonElement> entry : obj.entrySet()) {
+
+                        //Can be multiple players (api allows, app does not!)
+                        Tank tank = new Gson().fromJson(entry.getValue(), Tank.class);
+                        tankList.add(tank);
+                    }
+
+                     String snot = "abc";
+                } else if (status.equals("error")) {
+                    //api error
+                    Log.e(APP + " Class: " + TAG, "API EXCEPTION  in getting player details" + status);
+                }
+
+            } catch (IOException e) {
+                Log.e(APP + " Class: " + TAG, "IOEXception" + e.getMessage());
+                e.printStackTrace();
+                return false;
+            }
+            return true;
+        }
+
+        protected void onPostExecute(Boolean result) {
+            Log.d(APP + " Class: " + TAG, "OnPostExecute result" + result);
+            if (!result) {
+                Toast.makeText(getActivity(), getString(R.string.could_not_get_data), Toast.LENGTH_LONG).show();
+            } else {
+                updateFragment(tankList);
+            }
+        }
     }
 
     //SHOW PLAYERS
@@ -218,7 +299,7 @@ public class TankListFragment extends ListFragment implements AbsListView.OnItem
         // do something with the data
         //get player from postion
         //give it to the main activity
-        mListener.onTankSelected((Tank) mAdapter.getItem(position));
+        mListener.onTankSelectedListener((Tank) mAdapter.getItem(position));
         Log.d(APP + " Class: " + TAG, "PlayerListFragment Position clicked" + Integer.toString(position));
     }
 
@@ -233,29 +314,14 @@ public class TankListFragment extends ListFragment implements AbsListView.OnItem
     }
 
 
-    //Create some demo stuff
-    private ArrayList<PlayerDetailCard> getDataSet(PlayerExtended playerExtended) {
-        Log.d(APP + " Class: " + TAG, "Creating new arrayList with player details");
-
-        ArrayList<PlayerDetailCard> results = new ArrayList<PlayerDetailCard>();
-
-        //Tank count
-        PlayerDetailCard tankCountCard = new PlayerDetailCard(getString(R.string.textTankCount), Integer.toString(playerExtended.getTankCount()), R.mipmap.ic_tank_count);
-        PlayerDetailCard mastersOfExcellenceOneCard = new PlayerDetailCard(getString(R.string.textMarksOfExcellenceMastery), Integer.toString(playerExtended.getMarksOfExcellenceCount(1)), R.mipmap.ic_mastery);
-        PlayerDetailCard mastersOfExcellenceTwoCard = new PlayerDetailCard(getString(R.string.textMarksOfExcellenceOne), Integer.toString(playerExtended.getMarksOfExcellenceCount(2)), R.mipmap.ic_mastery_1);
-        PlayerDetailCard mastersOfExcellenceThreeCard = new PlayerDetailCard(getString(R.string.textMarksOfExcellenceTwo), Integer.toString(playerExtended.getMarksOfExcellenceCount(3)), R.mipmap.ic_mastery_2);
-        PlayerDetailCard mastersOfExcellenceFourCard = new PlayerDetailCard(getString(R.string.textMarksOfExcellenceThree), Integer.toString(playerExtended.getMarksOfExcellenceCount(4)), R.mipmap.ic_mastery_3);
-
-        results.add(tankCountCard);
-        results.add(mastersOfExcellenceOneCard);
-        results.add(mastersOfExcellenceTwoCard);
-        results.add(mastersOfExcellenceThreeCard);
-        results.add(mastersOfExcellenceFourCard);
-
-        return results;
-    }
-
-    public interface OnPlayerSelectedListener {
-        public void onTankSelected(Tank tank);
+    public interface onTankSelectedListener {
+        /**
+         * If a tank is selected in the list send the tank to the main activity
+         * The main activity will get details and show a detail view
+         *
+//         * @param Tank selected tank
+         */
+        public void onTankSelectedListener(Tank tank);
     }
 }
+
