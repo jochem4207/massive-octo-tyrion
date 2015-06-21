@@ -63,4 +63,9 @@
     <string name="contentDescriptionFragmentPlayerDetail">Player Icon</string>
     <string name="fragmentPlayerSearchEmptyList">Use the search function above</string>
     <string name="fragmentPlayerSearchListViewPlayerIcon">Player Icon</string>
+    <string name="textTankCount">Tanks</string>
+    <string name="textMarksOfExcellenceMastery">"Marks Of Excellence "</string>
+    <string name="textMarksOfExcellenceOne">Marks Of Excellence 1</string>
+    <string name="textMarksOfExcellenceTwo">Marks Of Excellence 2</string>
+    <string name="textMarksOfExcellenceThree">Marks Of Excellence 3</string>
 </resources>

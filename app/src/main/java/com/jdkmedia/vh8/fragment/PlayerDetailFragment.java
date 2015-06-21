@@ -31,8 +31,8 @@ public class PlayerDetailFragment extends Fragment {
     private PlayerExtended playerExtended;
 
     public PlayerDetailFragment(PlayerExtended player) {
+        Log.d(APP + " Class: " + TAG, "Created new instance of player detail fragment with user: " + player.getNickname());
         this.playerExtended = player;
-        // Required empty public constructor
     }
 
     @Override
@@ -43,11 +43,13 @@ public class PlayerDetailFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         //Get view and set text
         View view = inflater.inflate(R.layout.fragment_player_detail, container, false);
         TextView playerName = (TextView) view.findViewById(R.id.playerName);
         playerName.setText(playerExtended.getNickname() + " (" + playerExtended.getGlobalRating() + ")");
 
+        Log.d(APP + " Class: " + TAG, "Setting the adapter");
 
         //Set the adapters data
         mAdapter = new PlayerDetailCardAdapter(getDataSet(playerExtended)); //<-- get the data from getDataSet
@@ -64,24 +66,22 @@ public class PlayerDetailFragment extends Fragment {
 
     //Create some demo stuff
     private ArrayList<PlayerDetailCard> getDataSet(PlayerExtended playerExtended) {
+        Log.d(APP + " Class: " + TAG, "Creating new arrayList with player details");
+
         ArrayList<PlayerDetailCard> results = new ArrayList<PlayerDetailCard>();
 
-        //Achievements
-
         //Tank count
-        PlayerDetailCard tankCountCard = new PlayerDetailCard("Tanks", Integer.toString(playerExtended.getTankCount()) ,R.mipmap.ic_tank_count);
-        //TODO FIX IMAGES FIRST ONE
-        PlayerDetailCard mastersOfExcellenceOneCard = new PlayerDetailCard("Marks Of Excellence ", Integer.toString(playerExtended.getMarksOfExcellenceCount(1)),R.mipmap.ic_mastery);
-        PlayerDetailCard mastersOfExcellenceTwoCard = new PlayerDetailCard("Marks Of Excellence 1", Integer.toString(playerExtended.getMarksOfExcellenceCount(2)),R.mipmap.ic_mastery_1);
-        PlayerDetailCard mastersOfExcellenceThreeCard = new PlayerDetailCard("Marks Of Excellence 2", Integer.toString(playerExtended.getMarksOfExcellenceCount(3)),R.mipmap.ic_mastery_2);
-        PlayerDetailCard mastersOfExcellenceFourCard = new PlayerDetailCard("Marks Of Excellence 3", Integer.toString(playerExtended.getMarksOfExcellenceCount(4)),R.mipmap.ic_mastery_3);
+        PlayerDetailCard tankCountCard = new PlayerDetailCard(getString(R.string.textTankCount), Integer.toString(playerExtended.getTankCount()) ,R.mipmap.ic_tank_count);
+        PlayerDetailCard mastersOfExcellenceOneCard = new PlayerDetailCard(getString(R.string.textMarksOfExcellenceMastery), Integer.toString(playerExtended.getMarksOfExcellenceCount(1)),R.mipmap.ic_mastery);
+        PlayerDetailCard mastersOfExcellenceTwoCard = new PlayerDetailCard(getString(R.string.textMarksOfExcellenceOne), Integer.toString(playerExtended.getMarksOfExcellenceCount(2)),R.mipmap.ic_mastery_1);
+        PlayerDetailCard mastersOfExcellenceThreeCard = new PlayerDetailCard(getString(R.string.textMarksOfExcellenceTwo), Integer.toString(playerExtended.getMarksOfExcellenceCount(3)),R.mipmap.ic_mastery_2);
+        PlayerDetailCard mastersOfExcellenceFourCard = new PlayerDetailCard(getString(R.string.textMarksOfExcellenceThree), Integer.toString(playerExtended.getMarksOfExcellenceCount(4)),R.mipmap.ic_mastery_3);
 
         results.add(tankCountCard);
         results.add(mastersOfExcellenceOneCard);
         results.add(mastersOfExcellenceTwoCard);
         results.add(mastersOfExcellenceThreeCard);
         results.add(mastersOfExcellenceFourCard);
-
 
         return results;
     }
