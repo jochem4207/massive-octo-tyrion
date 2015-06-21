@@ -55,22 +55,17 @@ public class TankDetailFragment extends Fragment {
 
         TextView tankName = (TextView) view.findViewById(R.id.tankName);
         ImageView tankCountourImage = (ImageView) view.findViewById(R.id.imageView);
-
+        Picasso.with(getActivity().getApplicationContext()).load(tankExtended.getImage()).into(tankCountourImage);
 
         //http://developer.android.com/reference/android/content/res/Configuration.html#ORIENTATION_LANDSCAPE
         if(orientation == 2){
             //Landscape
             //Load extra stuff
-            Picasso.with(getActivity().getApplicationContext()).load(tankExtended.getImage()).into(tankCountourImage);
             tankName.setText(tankExtended.getLongName());
 
         }else{
-            Picasso.with(getActivity().getApplicationContext()).load(tankExtended.getImage()).into(tankCountourImage);
             tankName.setText(tankExtended.getName());
-
         }
-
-
 
 
         Log.d(APP + " Class: " + TAG, "Setting the adapter");
