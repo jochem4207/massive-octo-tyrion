@@ -7,10 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jdkmedia.vh8.domain.Player;
 import com.jdkmedia.vh8.R;
+import com.jdkmedia.vh8.domain.Tank;
 
 import java.util.List;
 
@@ -18,25 +20,24 @@ import java.util.List;
  * Created by jochem on 09-05-15.
  */
 
-public class PlayerListAdapter extends BaseAdapter {
+public class TankListAdapter extends BaseAdapter {
 
-    private List<Player> mList;
+    private List<Tank> mList;
     private Activity mContext;
     private LayoutInflater mLayoutInflater = null;
 
 
-    public PlayerListAdapter(Activity context, List<Player> list) {
+    public TankListAdapter(Activity context, List<Tank> list) {
         mContext = context;
         mList = list;
         mLayoutInflater = (LayoutInflater) mContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-
-
-    public List<Player> getData() {
+    public List<Tank> getData() {
         return mList;
     }
+
     @Override
     public int getCount() {
         return mList.size();
@@ -57,26 +58,29 @@ public class PlayerListAdapter extends BaseAdapter {
         if (convertView == null) {
 
             LayoutInflater li = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = li.inflate(R.layout.fragment_player_search_listview, parent, false);
+            convertView = li.inflate(R.layout.fragment_tank_list, parent, false);
 
             // initialize the view holder
             viewHolder = new ViewHolder();
-            viewHolder.tvBigTitle = (TextView) convertView.findViewById(R.id.firstLine);
+            viewHolder.tvTankName = (TextView) convertView.findViewById(R.id.tankFirstLine);
+            viewHolder.tvTankImage = (ImageView) convertView.findViewById(R.id.tankIcon);
+
             convertView.setTag(viewHolder);
 
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        Player item = (Player) getItem(position);
+        Tank item = (Tank) getItem(position);
 
-        //viewHolder.mTVItem.setText(mList.get(position));
-        viewHolder.tvBigTitle.setText(item.getNickName());
+        viewHolder.tvTankName.setText(item.getName());
+        //viewHolder.tvTankImage.setImageDrawable(item.getImage());
         return convertView;
     }
 
     private static class ViewHolder implements View.OnClickListener {
-        TextView tvBigTitle;
+        TextView tvTankName;
+        ImageView tvTankImage;
 
         @Override
         public void onClick(View v) {

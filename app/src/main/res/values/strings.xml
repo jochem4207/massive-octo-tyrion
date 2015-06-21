@@ -36,7 +36,6 @@
     <string name="title_button_settings">Settings</string>
     <string name="action_logout">logout</string>
 
-<!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="PlayerDetailCardContentDescriptionImage">Detail image</string>
     <string name="ListViewPlayerImageContentDescription">Account Image</string>

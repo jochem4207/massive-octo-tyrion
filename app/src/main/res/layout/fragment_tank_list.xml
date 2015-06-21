@@ -1,13 +1,23 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/someId"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.jdkmedia.vh8.fragment.TankListFragment">
+    android:layout_height="match_parent">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ListView
+        android:id="@id/android:list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"/>
+
+    <TextView android:id="@android:id/empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:text="@string/fragmentPlayerSearchEmptyList"
+        android:layout_below="@id/android:list"
+        android:layout_alignParentStart="true"
+        android:paddingStart="72dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="16dp"/>
+</RelativeLayout>
 
-</FrameLayout>

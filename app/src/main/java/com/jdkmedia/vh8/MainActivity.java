@@ -41,7 +41,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class MainActivity extends Activity implements MainActivityFragment.OnLoadDetailFragment, NavigationDrawerFragment.NavigationDrawerCallbacks, PlayerSearchMainFragment.OnPlayerSelectedListener, TankListFragment.onTankListInteractionListener {
+public class MainActivity extends Activity implements MainActivityFragment.OnLoadDetailFragment, NavigationDrawerFragment.NavigationDrawerCallbacks, PlayerSearchMainFragment.OnPlayerSelectedListener {
     //Logging
     public final String TAG = getClass().getName() + " ";
     public static final String APP = "World of tanks ";
@@ -417,11 +417,4 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
         fragmentManager.beginTransaction()
                 .replace(R.id.container, fragment, fragment.getClass().getName()).addToBackStack(fragment.getClass().getName()).commit();
     }
-
-
-    @Override
-    public void onTankListFragmentInteraction(Uri uri) {
-
-    }
-
 }
