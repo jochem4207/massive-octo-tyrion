@@ -140,25 +140,31 @@ public class TankSearchMainFragment extends ListFragment implements AbsListView.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-
+        //Check if tablet or not
         boolean isTablet = this.getResources().getConfiguration().isLayoutSizeAtLeast(Configuration.SCREENLAYOUT_SIZE_LARGE);
+
+
         Log.d(APP + " Class: " + TAG, "Load fragment player search view");
         //Inflate fragment layout
         View view = inflater.inflate(R.layout.fragment_tank_list, container, false);
 
-        if(isTablet){
-            mGridView = (GridView) view.findViewById(R.id.someGridList);
-//            Log.d(APP + " Class: " + TAG, "Set grid adapter");
-//            mGridAdapter = new TankGridAdapter(getActivity(), new ArrayList<Tank>());
-            mListAdapter = new TankListAdapter(getActivity(), new ArrayList<Tank>());
 
-            //Set adapter
-            mGridView.setAdapter(mListAdapter);
-
-            // Set OnItemClickListener so we can be notified on item clicks
-            mListView.setOnItemClickListener(this);
-
-        }else{
+        //Can't test this. Emulator is not a tablet
+        //
+//        if(isTablet){
+//            mGridView = (GridView) view.findViewById(R.id.someGridList);
+////            Log.d(APP + " Class: " + TAG, "Set grid adapter");
+////            mGridAdapter = new TankGridAdapter(getActivity(), new ArrayList<Tank>());
+//            mListAdapter = new TankListAdapter(getActivity(), new ArrayList<Tank>());
+//
+//            //Set adapter
+//            mGridView.setAdapter(mListAdapter);
+//
+//            // Set OnItemClickListener so we can be notified on item clicks
+//            mGridView.setOnItemClickListener(this);
+//
+//
+//        }else{
             //Get the listview
             mListView = (ListView) view.findViewById(android.R.id.list);
 
@@ -174,7 +180,7 @@ public class TankSearchMainFragment extends ListFragment implements AbsListView.
             mListView.setOnItemClickListener(this);
 
 
-        }
+//        }
 
         if (savedInstanceState != null && tankList != null) {
             tankList = (ArrayList<Tank>) savedInstanceState.getSerializable("search_result");

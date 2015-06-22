@@ -32,4 +32,24 @@
     <string name="PlayerDetailCardContentDescriptionImage">Detail image</string>
     <string name="ListViewPlayerImageContentDescription">Account Image</string>
     <string name="could_not_get_data">Unable to fetch data from server</string>
+    <string name="contentDescriptionFragmentPlayerDetail">Speler icoon</string>
+    <string name="contentDescriptionFragmentTankDetail">Tank icoon</string>
+    <string name="detail_fragment_rating">Rating</string>
+    <string name="dialogMessage">Wil je dat de app je inlog data opslaat</string>
+    <string name="dialogTitle">Sla login data op</string>
+    <string name="drawer_close">Menu dicht</string>
+    <string name="drawer_open">Menu open</string>
+    <string name="fragmentPlayerSearchEmptyList">Gebruik de zoek balk boven in</string>
+    <string name="fragment_tank_detail_inner_tank_count">Tank aantal</string>
+    <string name="fragmentPlayerSearchListViewPlayerIcon">Speler icoon</string>
+    <string name="hello_blank_fragment"></string>
+    <string name="homeScreenPlayerButton">ga naar zoek spelers</string>
+    <string name="login_message_home_screen">Log in om je statistieken te zien</string>
+    <string name="player_search">Speler zoeken</string>
+    <string name="pref_title_new_message_notifications"></string>
+    <string name="settings">Instellingen</string>
+    <string name="tankButton">Ga naar tank lijst</string>
+    <string name="textMarksOfExcellenceOne"></string>
+    <string name="textTankCount">Tanks</string>
+    <string name="welcome_logged_in_user">Welkom</string>
 </resources>
