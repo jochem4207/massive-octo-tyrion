@@ -30,7 +30,7 @@ public class TankDetailInnerFragment extends Fragment {
      * @param loggedInPlayer the player that is logged in or null
      */
     public TankDetailInnerFragment(PlayerExtended loggedInPlayer) {
-        Log.d(APP + " Class: " + TAG, "Creating new player detail innerfragment");
+        Log.d(APP + " Class: " + TAG, "Creating new tank detail innerfragment");
         this.player = loggedInPlayer;
     }
 

@@ -1,6 +1,7 @@
 package com.jdkmedia.vh8.fragment;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.pm.ActivityInfo;
@@ -64,6 +65,8 @@ public class MainActivityFragment extends Fragment {
                 Log.d(APP + " Class: ", "On create  retrevied no player");
             }
         }
+
+
     }
 
     @Override
