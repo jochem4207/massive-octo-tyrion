@@ -123,7 +123,6 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        dialog();
     }
 
 
@@ -414,25 +413,7 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
     }
 
 
-    public void dialog(){
-        new AlertDialog.Builder(this)
-            .setTitle("App openen")
-            .setMessage("Will je de app openen")
-            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    // continue with delete
-                }
-            })
-            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    finish();
-                    System.exit(0);
-                    //this.finishAffinity
-                }
-            })
-            .setIcon(android.R.drawable.ic_dialog_alert)
-            .show();
-    }
+
 
     /**
      * Called when the user touches the button on the home screen

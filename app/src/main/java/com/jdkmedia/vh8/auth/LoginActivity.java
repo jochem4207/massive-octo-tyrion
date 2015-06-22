@@ -1,6 +1,8 @@
 package com.jdkmedia.vh8.auth;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,11 +19,13 @@ public class LoginActivity extends Activity {
     public final String TAG = getClass().getName();
     public static final String APP = "JdkMedia ";
     public static final String APP_ID = "74da03a344137eb2756c49c9e9069092";
+    public Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        activity = this;
         //Set content login
         setContentView(R.layout.activity_login);
 
@@ -85,6 +89,23 @@ public class LoginActivity extends Activity {
                             intent.putExtras(b);
                             Log.i(APP + " Class: " + TAG, "Retrieving details from url success");
                         }
+
+                        new AlertDialog.Builder(activity)
+                                .setTitle(getString(R.string.dialogTitle))
+                                .setMessage(getString(R.string.dialogMessage))
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        //TODO
+                                    }
+                                })
+                                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        //TODO
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
+
 
                         //Start the activity with the values from the bundle
                         startActivity(intent);
