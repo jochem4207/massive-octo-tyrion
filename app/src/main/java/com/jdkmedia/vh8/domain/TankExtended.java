@@ -2,10 +2,12 @@ package com.jdkmedia.vh8.domain;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by jochem on 21-06-15.
  */
-public class TankExtended {
+public class TankExtended implements Serializable{
 
     @SerializedName("engine_power")
     private int enginePower;

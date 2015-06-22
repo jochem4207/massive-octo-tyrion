@@ -89,7 +89,7 @@ public class MainActivityFragment extends Fragment {
             Log.d(APP + " Class: ", "Player is not logged in loading detail inner fragment empty!");
 
             //Detail fragment
-            PlayerDetailInnerFragment playerDetailInnerFragment = new PlayerDetailInnerFragment(null);
+            PlayerDetailInnerFragment playerDetailInnerFragment = PlayerDetailInnerFragment.newInstance(null);
             //Manage fragment
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
@@ -97,7 +97,7 @@ public class MainActivityFragment extends Fragment {
 
 
             //Load tank details
-            TankDetailInnerFragment tankDetailInnerFragment = new TankDetailInnerFragment(null);
+            TankDetailInnerFragment tankDetailInnerFragment =  TankDetailInnerFragment.newInstance(null);
             //Manage fragment
             fragmentManager.beginTransaction()
                     .replace(R.id.child_fragment2, tankDetailInnerFragment, tankDetailInnerFragment.getClass().getName()).addToBackStack(tankDetailInnerFragment.getClass().getName()).commit();

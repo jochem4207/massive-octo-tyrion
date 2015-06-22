@@ -24,19 +24,25 @@ public class PlayerDetailInnerFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Constructor for the fragment
-     *
-     * @param loggedInPlayer the player that is logged in or null
-     */
-    public PlayerDetailInnerFragment(PlayerExtended loggedInPlayer) {
-        Log.d(APP + " Class: " + TAG, "Creating new player detail innerfragment");
-        this.player = loggedInPlayer;
+    public static PlayerDetailInnerFragment newInstance(PlayerExtended playerExtended) {
+
+        PlayerDetailInnerFragment fragment = new PlayerDetailInnerFragment();
+        Bundle args = new Bundle();
+
+        args.putSerializable("selectedPlayer", playerExtended);
+        fragment.setArguments(args);
+
+        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            //Get the logged in player
+            player = (PlayerExtended) getArguments().getSerializable("selectedPlayer");
+        }
     }
 
     @Override

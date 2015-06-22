@@ -2,10 +2,12 @@ package com.jdkmedia.vh8.domain;
 
 import android.media.Image;
 
+import java.io.Serializable;
+
 /**
  * Created by jochem on 31-05-15.
  */
-public class PlayerDetailCard {
+public class PlayerDetailCard implements Serializable {
     private String mainTitle;
     private String subTitle;
     private int imageLocation;

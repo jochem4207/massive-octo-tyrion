@@ -24,19 +24,27 @@ public class TankDetailInnerFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Constructor for the fragment
-     *
-     * @param loggedInPlayer the player that is logged in or null
-     */
-    public TankDetailInnerFragment(PlayerExtended loggedInPlayer) {
-        Log.d(APP + " Class: " + TAG, "Creating new tank detail innerfragment");
-        this.player = loggedInPlayer;
+
+    public static TankDetailInnerFragment newInstance(PlayerExtended playerExtended) {
+
+        TankDetailInnerFragment fragment = new TankDetailInnerFragment();
+        Bundle args = new Bundle();
+
+        args.putSerializable("selectedPlayer", playerExtended);
+        fragment.setArguments(args);
+
+        return fragment;
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            //Get the logged in player
+            player = (PlayerExtended) getArguments().getSerializable("selectedPlayer");
+        }
     }
 
     @Override

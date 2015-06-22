@@ -30,16 +30,33 @@ public class PlayerDetailFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private PlayerExtended playerExtended;
 
-    public PlayerDetailFragment(PlayerExtended player) {
-        Log.d(APP + " Class: " + TAG, "Created new instance of player detail fragment with user: " + player.getNickname());
-        this.playerExtended = player;
+    public PlayerDetailFragment(){
+        //required empty constructor
+    }
+
+    public static PlayerDetailFragment newInstance(PlayerExtended playerExtended) {
+
+        PlayerDetailFragment fragment = new PlayerDetailFragment();
+        Bundle args = new Bundle();
+
+        args.putSerializable("selectedPlayer", playerExtended);
+        fragment.setArguments(args);
+
+        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+
+        if (getArguments() != null) {
+            //Get the logged in player
+            playerExtended = (PlayerExtended) getArguments().getSerializable("selectedPlayer");
+        }
+
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

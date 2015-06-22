@@ -2,10 +2,12 @@ package com.jdkmedia.vh8.domain;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by jochem on 09-06-15.
  */
-public class Statistics {
+public class Statistics implements Serializable  {
     @SerializedName("max_frags_tank_id")
     private int maxFragsTankId;
 

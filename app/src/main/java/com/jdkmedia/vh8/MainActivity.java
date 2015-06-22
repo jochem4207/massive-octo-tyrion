@@ -391,11 +391,11 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
                 FragmentManager fragmentManager = getFragmentManager();
 
                 if (innerFragment) {
-                    PlayerDetailInnerFragment playerDetailInnerFragment = new PlayerDetailInnerFragment(playerExtended);
+                    PlayerDetailInnerFragment playerDetailInnerFragment = PlayerDetailInnerFragment.newInstance(playerExtended);
                     fragmentManager.beginTransaction()
                             .replace(R.id.child_fragment, playerDetailInnerFragment, playerDetailInnerFragment.getClass().getName()).addToBackStack(playerDetailInnerFragment.getClass().getName()).commit();
 
-                    TankDetailInnerFragment tankDetailInnerFragment = new TankDetailInnerFragment(playerExtended);
+                    TankDetailInnerFragment tankDetailInnerFragment = TankDetailInnerFragment.newInstance(playerExtended);
                     fragmentManager.beginTransaction()
                             .replace(R.id.child_fragment2, tankDetailInnerFragment, tankDetailInnerFragment.getClass().getName()).addToBackStack(tankDetailInnerFragment.getClass().getName()).commit();
 
@@ -403,7 +403,12 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
 
                 } else {
 
-                    PlayerDetailFragment playerDetailFragment = new PlayerDetailFragment(playerExtended);
+                    PlayerDetailFragment playerDetailFragment = PlayerDetailFragment.newInstance(playerExtended);
+
+
+
+
+
                     fragmentManager.beginTransaction()
                             .replace(R.id.container, playerDetailFragment, playerDetailFragment.getClass().getName()).addToBackStack(playerDetailFragment.getClass().getName()).commit();
                 }
@@ -507,7 +512,7 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
 
                 FragmentManager fragmentManager = getFragmentManager();
 
-                TankDetailFragment tankDetailFragment = new TankDetailFragment(tankExtended);
+                TankDetailFragment tankDetailFragment =  TankDetailFragment.newInstance(tankExtended);
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, tankDetailFragment, tankDetailFragment.getClass().getName()).addToBackStack(tankDetailFragment.getClass().getName()).commit();
 

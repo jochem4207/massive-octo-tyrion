@@ -15,6 +15,7 @@ import com.jdkmedia.vh8.R;
 import com.jdkmedia.vh8.adapters.PlayerDetailCardAdapter;
 import com.jdkmedia.vh8.adapters.TankDetailCardAdapter;
 import com.jdkmedia.vh8.domain.PlayerDetailCard;
+import com.jdkmedia.vh8.domain.PlayerExtended;
 import com.jdkmedia.vh8.domain.TankDetailCard;
 import com.jdkmedia.vh8.domain.TankExtended;
 import com.squareup.picasso.Picasso;
@@ -33,15 +34,30 @@ public class TankDetailFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private TankExtended tankExtended;
 
-    public TankDetailFragment(TankExtended tank) {
-        Log.d(APP + " Class: " + TAG, "Created new instance of tank detail fragment with tank: " + tank.getName());
-        this.tankExtended = tank;
+    public TankDetailFragment() {
+        //req empty constr
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+        if (getArguments() != null) {
+            //Get the logged in player
+            tankExtended = (TankExtended) getArguments().getSerializable("tankExtended");
+        }
+    }
+
+
+    public static TankDetailFragment newInstance(TankExtended tank) {
+
+        TankDetailFragment fragment = new TankDetailFragment();
+        Bundle args = new Bundle();
+
+        args.putSerializable("tankExtended", tank);
+        fragment.setArguments(args);
+
+        return fragment;
     }
 
     @Override
