@@ -43,28 +43,20 @@ public class TankDetailInnerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //Get the args
         View view;
-        if (player == null) {
-            Log.d(APP + " Class: " + TAG, "Player is not logged in, load error view");
+        view = inflater.inflate(R.layout.fragment_tank_detail_inner, container, false);
 
-            //Load error view
-            view = inflater.inflate(R.layout.fragment_player_detail_not_logged_in, container, false);
-
-            //Get textview and settext
-            TextView playerDetailNotLoggedInTextView = (TextView) view.findViewById(R.id.playerDetailNotLoggedIn);
-            playerDetailNotLoggedInTextView.setText(R.string.login_message_home_screen);
-
-        } else {
+        //if user isn't logged in player = null
+        if(player != null) {
             Log.d(APP + " Class: " + TAG, "Player is logged in, load details view");
-
-            view = inflater.inflate(R.layout.fragment_player_detail_inner, container, false);
+            player.getPlayerTankList().size();
 
             //Show some player details
             TextView playerName = (TextView) view.findViewById(R.id.playerName);
             TextView rating = (TextView) view.findViewById(R.id.rating);
-            playerName.setText(player.getNickname());
-            rating.setText(Integer.toString(player.getGlobalRating()));
+            
+            playerName.setText(getString(R.string.fragment_tank_detail_inner_tank_count));
+            rating.setText(Integer.toString(player.getTankCount()));
         }
-
         return view;
     }
 }

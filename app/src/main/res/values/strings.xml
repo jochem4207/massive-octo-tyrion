@@ -61,4 +61,5 @@
     <string name="textMarksOfExcellenceOne">Marks Of Excellence 1</string>
     <string name="textMarksOfExcellenceTwo">Marks Of Excellence 2</string>
     <string name="textMarksOfExcellenceThree">Marks Of Excellence 3</string>
+    <string name="fragment_tank_detail_inner_tank_count">Tank count</string>
 </resources>

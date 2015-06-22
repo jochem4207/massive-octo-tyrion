@@ -32,15 +32,16 @@
     <FrameLayout
         android:id="@+id/child_fragment"
         android:layout_width="fill_parent"
-        android:layout_height="250dip"
-        android:layout_alignEnd="@+id/tankButton"
-        android:layout_alignParentBottom="true" />
+        android:layout_height="100dp"
+        android:layout_above="@+id/child_fragment2"
+        android:layout_alignParentStart="true" />
+
 
     <FrameLayout
         android:id="@+id/child_fragment2"
         android:layout_width="fill_parent"
-        android:layout_height="250dip"
-        android:layout_alignEnd="@+id/child_fragment"
-        android:layout_alignParentBottom="true" />
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

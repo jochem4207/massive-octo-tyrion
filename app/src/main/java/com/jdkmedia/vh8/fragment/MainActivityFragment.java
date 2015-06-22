@@ -80,6 +80,7 @@ public class MainActivityFragment extends Fragment {
             //Load the detailed user info for the fragment on the home screen
             Log.d(APP + " Class: ", "Player is logged in loading detail inner fragment");
             mListener.onLoadDetailFragment(loggedInPlayer);
+
         } else {
             //Don't load anything, use rnot logged in
             Log.d(APP + " Class: ", "Player is not logged in loading detail inner fragment empty!");

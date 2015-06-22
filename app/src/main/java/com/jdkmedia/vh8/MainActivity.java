@@ -31,6 +31,7 @@ import com.jdkmedia.vh8.fragment.PlayerDetailFragment;
 import com.jdkmedia.vh8.fragment.PlayerDetailInnerFragment;
 import com.jdkmedia.vh8.fragment.PlayerSearchMainFragment;
 import com.jdkmedia.vh8.fragment.TankDetailFragment;
+import com.jdkmedia.vh8.fragment.TankDetailInnerFragment;
 import com.jdkmedia.vh8.fragment.TankSearchMainFragment;
 
 import java.io.IOException;
@@ -75,12 +76,20 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
         Bundle b = getIntent().getExtras();
 
         //Get access token
-        if (b != null && !b.getBoolean("error")) {
 
+        //THIS IF IS CHANGED FOR TESTING
+        //        if (b != null && !b.getBoolean("error")) {
+        if (true) {
             //Get properties from bundle
-            accessToken = b.getString("accessToken");
-            String nickName = b.getString("nickName");
-            int accountId = b.getInt("id");
+//            accessToken = b.getString("accessToken");
+//            String nickName = b.getString("nickName");
+//            int accountId = b.getInt("id");
+
+
+            //HARDCODED FOR TESTING:
+            accessToken = "2a29c059403e1f08a2f3c635461103a6def1ad91";
+            String nickName = "database2";
+            int accountId = 504337382;
 
             //Set logged in flag (for menu and checks)
             isLoggedIn = true;
@@ -246,6 +255,7 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
         Log.d(APP + " Class: " + TAG, "OnPlayerSelected user is logged in");
         MyTaskParams taskParams = new MyTaskParams(API_URL + API_CALL + APPLICATION_ID + API_OPTION_AUTH + accessToken + API_OPTION + playerExtended.getAccountId(), true, playerExtended.getAccountId());
         new CallAPI().execute(taskParams);
+
     }
 
 
@@ -381,6 +391,13 @@ public class MainActivity extends Activity implements MainActivityFragment.OnLoa
                     PlayerDetailInnerFragment playerDetailInnerFragment = new PlayerDetailInnerFragment(playerExtended);
                     fragmentManager.beginTransaction()
                             .replace(R.id.child_fragment, playerDetailInnerFragment, playerDetailInnerFragment.getClass().getName()).addToBackStack(playerDetailInnerFragment.getClass().getName()).commit();
+
+                    TankDetailInnerFragment tankDetailInnerFragment = new TankDetailInnerFragment(playerExtended);
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.child_fragment2, tankDetailInnerFragment, tankDetailInnerFragment.getClass().getName()).addToBackStack(tankDetailInnerFragment.getClass().getName()).commit();
+
+
+
                 } else {
 
                     PlayerDetailFragment playerDetailFragment = new PlayerDetailFragment(playerExtended);
