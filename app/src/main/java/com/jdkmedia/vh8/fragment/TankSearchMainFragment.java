@@ -2,6 +2,7 @@ package com.jdkmedia.vh8.fragment;
 
 import android.app.Activity;
 import android.app.ListFragment;
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -23,26 +25,17 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.jdkmedia.vh8.R;
-import com.jdkmedia.vh8.adapters.PlayerListAdapter;
+import com.jdkmedia.vh8.adapters.TankGridAdapter;
 import com.jdkmedia.vh8.adapters.TankListAdapter;
-import com.jdkmedia.vh8.api.JsonResultPlayerQuery;
-import com.jdkmedia.vh8.domain.Player;
-import com.jdkmedia.vh8.domain.PlayerExtended;
 import com.jdkmedia.vh8.domain.Tank;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.NavigableSet;
-import java.util.Set;
-import java.util.TreeSet;
 
 
 public class TankSearchMainFragment extends ListFragment implements AbsListView.OnItemClickListener {
@@ -60,7 +53,9 @@ public class TankSearchMainFragment extends ListFragment implements AbsListView.
      * The fragment's ListView/GridView.
      */
     private ListView mListView;
-    private TankListAdapter mAdapter;
+    private GridView mGridView;
+    private TankListAdapter mListAdapter;
+    private TankGridAdapter mGridAdapter;
     private onTankSelectedListener mListener;
 
     //Result api
@@ -144,23 +139,42 @@ public class TankSearchMainFragment extends ListFragment implements AbsListView.
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+
+        boolean isTablet = this.getResources().getConfiguration().isLayoutSizeAtLeast(Configuration.SCREENLAYOUT_SIZE_LARGE);
         Log.d(APP + " Class: " + TAG, "Load fragment player search view");
         //Inflate fragment layout
         View view = inflater.inflate(R.layout.fragment_tank_list, container, false);
 
-        //Get the listview
-        mListView = (ListView) view.findViewById(android.R.id.list);
+        if(isTablet){
+            mGridView = (GridView) view.findViewById(R.id.someGridList);
+//            Log.d(APP + " Class: " + TAG, "Set grid adapter");
+//            mGridAdapter = new TankGridAdapter(getActivity(), new ArrayList<Tank>());
+            mListAdapter = new TankListAdapter(getActivity(), new ArrayList<Tank>());
 
-        Log.d(APP + " Class: " + TAG, "Set adapter");
+            //Set adapter
+            mGridView.setAdapter(mListAdapter);
 
-        //Initate adapter
-        mAdapter = new TankListAdapter(getActivity(), new ArrayList<Tank>());
+            // Set OnItemClickListener so we can be notified on item clicks
+            mListView.setOnItemClickListener(this);
 
-        //Set adapter
-        mListView.setAdapter(mAdapter);
+        }else{
+            //Get the listview
+            mListView = (ListView) view.findViewById(android.R.id.list);
 
-        // Set OnItemClickListener so we can be notified on item clicks
-        mListView.setOnItemClickListener(this);
+            Log.d(APP + " Class: " + TAG, "Set list adapter");
+
+            //Initate adapter
+            mListAdapter = new TankListAdapter(getActivity(), new ArrayList<Tank>());
+
+            //Set adapter
+            mListView.setAdapter(mListAdapter);
+
+            // Set OnItemClickListener so we can be notified on item clicks
+            mListView.setOnItemClickListener(this);
+
+
+        }
 
         if (savedInstanceState != null && tankList != null) {
             tankList = (ArrayList<Tank>) savedInstanceState.getSerializable("search_result");
@@ -212,10 +226,10 @@ public class TankSearchMainFragment extends ListFragment implements AbsListView.
 
         Log.d(APP + " Class: " + TAG, "Clear adapter and add new data");
         // update data in our adapter
-        mAdapter.getData().clear();
-        mAdapter.getData().addAll(data);
+        mListAdapter.getData().clear();
+        mListAdapter.getData().addAll(data);
         // Notify adapter that it is changed
-        mAdapter.notifyDataSetChanged();
+        mListAdapter.notifyDataSetChanged();
     }
 
 
@@ -305,7 +319,7 @@ public class TankSearchMainFragment extends ListFragment implements AbsListView.
         // do something with the data
         //get player from postion
         //give it to the main activity
-        mListener.onTankSelectedListener((Tank) mAdapter.getItem(position));
+        mListener.onTankSelectedListener((Tank) mListAdapter.getItem(position));
         Log.d(APP + " Class: " + TAG, "PlayerListFragment Position clicked" + Integer.toString(position));
     }
 
